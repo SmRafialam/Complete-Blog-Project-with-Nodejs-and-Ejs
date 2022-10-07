@@ -1,0 +1,53 @@
+<%- include("header") %>
+
+<body>
+
+  <%- include("leftbar") %>
+
+
+  <%- include("navbar") %>
+
+
+<div class="br-mainpanel">
+    <div class="br-pagetitle">
+        <div class="container-fluid p-5">
+            <h2 class="text-center">Add Users</h2>
+            <form method="post" action="/addposts" id="add-form" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input name="title" class="form-control" placeholder="Enter title" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea name="content" class="form-control" placeholder="Enter Content" required></textarea> 
+                </div>
+                <div class="form-group">
+                    <label for="shortDescription">Short Description</label>
+                    <textarea name="shortDescription" class="form-control" placeholder="Enter Short Description" required></textarea> 
+                </div>
+                <div class="form-group">
+                    <label for="image" >Thumbnail</label>
+                    <input name="image" class="form-control" type="file" required>
+                </div>
+                <div class="form-group py-2">
+                    <label for="gender" class="text-dark">Status: </label>
+                    <div class="radio form-check form-check-inline">
+                        <input type="radio" id="radio4" name="status" value="active" required>
+                        <label for="radio4" >Active</label>
+                    </div>
+                    <div class="radio form-check form-check-inline">
+                        <input type="radio" id="radio5" name="status" value="Inactive" required>
+                        <label for="radio5">Inactive</label>
+                    </div>
+                </div>
+                <div class="form-group py-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>   
+            </form>   
+        </div>
+    </div>
+</div>
+
+
+<%- include("footer") %>

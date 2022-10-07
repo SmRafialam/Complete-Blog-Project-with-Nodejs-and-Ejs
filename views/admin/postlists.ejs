@@ -1,0 +1,56 @@
+<%- include("header") %>
+
+<body>
+
+  <%- include("leftbar") %>
+
+
+  <%- include("navbar") %>
+
+<!-- main body -->
+<div class="br-mainpanel">
+    <div class="br-pagetitle">
+    <div class="container-fluid p-5">
+        
+        <form action="/admin/postlists" method="post">
+            <table class="table">
+                <thead class="thead-dark bg-dark text-white">
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Short Description</th>
+                        <th>Image</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>Blog</td>
+                        <td>PRUVIT</td>
+                        <td>Catch up on current trends from leading throught-leaders in the ketone space.                        </td>
+                        <td><img src="" alt=""></td>
+                        <td>Active</td>
+                        <td>
+                            <a href="#" class="btn border-shadow update">
+                                <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
+                            </a>
+                            <a href="#" class="btn border-shadow deletebtn">
+                                <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</div>
+<!-- main body end-->
+
+
+<!-- footer -->
+<%- include("footer") %> 
+<!-- footer -->
+
