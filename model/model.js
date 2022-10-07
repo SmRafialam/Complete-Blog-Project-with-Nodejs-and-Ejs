@@ -12,9 +12,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: {
+    image: {
         type: String,
-        required: true,
+        //required: true,
     },
     status:String,
 });

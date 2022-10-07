@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../model/model');
 const multer = require('multer');
-const fs = require('fs')
 //image upload
 var storage  = multer.diskStorage({
     destination: function(req,file,cb){
@@ -17,16 +16,19 @@ var upload = multer({
 }).single("image");
 
 //insert an user into database route
-router.post('/addposts',upload,async(req,res)=>{
-    const user = new User({
+router.post('/addposts',upload,(req,res)=>{
+    const userdata = {
         title: req.body.title,
         content: req.body.content,
         shortDescription: req.body.shortDescription,
-        image: req.file.filename,
+        image: "test1",
         status: req.body.status,
-    });
+    }
+    console.log(userdata);
+    const user = new User(userdata);
     
     user.save((err) => {
+        console.log(err);
         if(err){
             res.json({message: err.message, type: 'danger'});
 
@@ -35,7 +37,7 @@ router.post('/addposts',upload,async(req,res)=>{
                 type: "success",
                 message: "User added successfully",
             };
-            res.redirect('/postlists');
+            res.redirect('/admin/postlists');
         }
     })
     
