@@ -11,7 +11,6 @@
 <div class="br-mainpanel">
     <div class="br-pagetitle">
     <div class="container-fluid p-5">
-        
         <form action="/postlists" method="post">
             <% if(users != ''){ %>
                 <table class="table">
@@ -27,13 +26,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% users.forEach((row,index)=>{ %>
-                            <tr>
-                                <td><%= index %></td>
+											<% users.forEach((row,index)=>{ %>
+													<tr class="align-items-center">
+															<td><%= index %></td>
                                 <td><%= row.title %></td>
                                 <td><%= row.content %></td>
                                 <td><%= row.shortDescription %></td>
-                                <td> <img src="<%= row.image %>" width="50" class="img-thumbnail"> </td>
+                                <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
                                 <td><%= row.status %></td>
                                 <td class="">
                                     <a href="/update-user/<%=row._id%>" class="btn border-shadow updatebtn">

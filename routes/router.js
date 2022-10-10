@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const User = require('../model/model');
 const multer = require('multer');
+const fs = require('fs');
+
 //image upload
 var storage  = multer.diskStorage({
     destination: function(req,file,cb){
-        cb(null,'./uploads');
+        cb(null,'./static/uploads');
     },
     filename: function(req,file,cb){
         cb(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
@@ -70,5 +72,83 @@ router.get('/admin/postlists',function(req,res){
             }
         });
 });
+//edit an user route
+router.get('/update-user/:id',function(req,res){
+    let id = req.params.id;
+    User.findById(id, (err,user)=>{
+        if(err){
+            res.redirect("/admin/postlists");
+        }else{
+                res.render("admin/update_user",{
+                    title: "Update user",
+                    user:user,
+
+                })
+            }
+        
+    })
+});
+//update an user route
+router.post('/update_user/:id',upload,function(req,res){
+    let id = req.params.id;
+    let new_image = "";
+    if(req.file){
+        new_image = req.file.filename;
+        try{
+            fs.unlinkSync('./uploads/'+req.body.old_image);
+        }catch(err){
+            console.log(err);
+        }
+    }else{
+        new_image = req.body.old_image;
+    }
+
+
+    User.findByIdAndUpdate(id, {
+        title: req.body.title,
+        content: req.body.content,
+        shortDescription: req.body.shortDescription,
+        image: new_image,
+        status: req.body.status,
+    },
+    (err,result)=>{
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "User added successfully",
+            };
+            res.redirect('/admin/postlists');
+        }
+    });
+});
+
+//Delete an user route
+router.get('/delete-user/:id',(req,res)=>{
+    let id = req.params.id;
+    User.findByIdAndRemove(id,(err,result)=>{
+        if(result.image!=''){
+            try{
+                fs.unlinkSync('./uploads/'+result.image);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "User added successfully",
+            };
+            res.redirect('/admin/postlists');
+        }
+
+    })
+})
+
 
 module.exports = router;

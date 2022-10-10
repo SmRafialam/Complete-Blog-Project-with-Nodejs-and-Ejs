@@ -34,7 +34,12 @@ app.use(
 //route prefix
 app.use("",require("./routes/router"));
 
+// app.use(express.static("uploads"));
+
 app.use("/static",express.static(__dirname + "/static"));
+
+
+
 app.set("view engine","ejs");
 
 
