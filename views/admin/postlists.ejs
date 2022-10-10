@@ -12,37 +12,45 @@
     <div class="br-pagetitle">
     <div class="container-fluid p-5">
         
-        <form action="/admin/postlists" method="post">
-            <table class="table">
-                <thead class="thead-dark bg-dark text-white">
-                    <tr>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Short Description</th>
-                        <th>Image</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr>
-                        <td>Blog</td>
-                        <td>PRUVIT</td>
-                        <td>Catch up on current trends from leading throught-leaders in the ketone space.                        </td>
-                        <td><img src="" alt=""></td>
-                        <td>Active</td>
-                        <td>
-                            <a href="#" class="btn border-shadow update">
-                                <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
-                            </a>
-                            <a href="#" class="btn border-shadow deletebtn">
-                                <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <form action="/postlists" method="post">
+            <% if(users != ''){ %>
+                <table class="table">
+                    <thead class="thead-dark bg-dark text-white">
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Short Description</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach((row,index)=>{ %>
+                            <tr>
+                                <td><%= index %></td>
+                                <td><%= row.title %></td>
+                                <td><%= row.content %></td>
+                                <td><%= row.shortDescription %></td>
+                                <td> <img src="<%= row.image %>" width="50" class="img-thumbnail"> </td>
+                                <td><%= row.status %></td>
+                                <td class="">
+                                    <a href="/update-user/<%=row._id%>" class="btn border-shadow updatebtn">
+                                        <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    </a>
+                                    <a href="/delete-user/<%=row._id%>" class="btn border-shadow deletebtn" >
+                                        <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        <% }) %> 
+                    </tbody>
+                </table>
+            <% } else { %>
+                <h1 class="text-cwntwr text-secondary my-5">No users found in the datrabase!</h1>
+            <% } %>
+            
         </form>
     </div>
 </div>

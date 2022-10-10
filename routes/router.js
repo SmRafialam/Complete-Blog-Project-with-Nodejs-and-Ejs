@@ -21,7 +21,7 @@ router.post('/addposts',upload,(req,res)=>{
         title: req.body.title,
         content: req.body.content,
         shortDescription: req.body.shortDescription,
-        image: "test1",
+        image: req.file.filename,
         status: req.body.status,
     }
     console.log(userdata);
@@ -61,7 +61,14 @@ router.get('/admin/addposts',function(req,res){
     res.render("admin/addposts", { title:"Add Posts" });
 });
 router.get('/admin/postlists',function(req,res){
-    res.render("admin/postlists", { title:"Add Lists" });
+        User.find().exec((err,users)=>{
+            if(err){
+                res.send("Something went wrong");
+            } else{
+                res.render("admin/postlists", { title:"Add Lists", users:users, });
+
+            }
+        });
 });
 
 module.exports = router;
