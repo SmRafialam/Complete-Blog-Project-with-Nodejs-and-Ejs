@@ -52,7 +52,14 @@ router.get('/users',function(req,res){
 });
 
 router.get('/',function(req,res){
-    res.send("Home Page !");
+    User.find().exec((err,users)=>{
+        if(err){
+            res.send("Something went wrong");
+        } else{
+            res.render("user/home", {users:users});
+
+        }
+    });
 });
 
 router.get('/admin/dashboard',function(req,res){

@@ -1,0 +1,537 @@
+<%- include("headerblogdetails") %>
+
+<main class="blogdetails">
+
+<% blogdetails.forEach(function(blogdetails){ %>
+
+    <section class="blog-details">
+      <article class="container">
+        <figure class="row">
+          <div class="col-sm-12">
+            <div class="blog-details-heading">
+              <h2><%= blogdetails.titledetails %></h2>
+              <p>
+                <%= blogdetails.contentdetails %>
+              </p>
+            </div>
+
+            <div class="blog-details-img">
+              <div class="blog-details-img-heading">
+                <img src="../../static/user/images/pruvit-hq.png" alt="" class="img-fluid" />
+                <p>Prüvit HQ</p>
+              </div>
+
+              <img
+                src="../../static/user/images/inner-img.png"
+                alt=""
+                class="img-fluid blog-details-inner-img"
+              />
+            </div>
+
+            <div class="blog-details-ingredients">
+              <h3>Ingredients</h3>
+              <ul>
+                <li>1 packet KETO//OS® Unleashed Eclipse</li>
+                <li>1 packet KETO//OS® NAT™ Swiss Cacao</li>
+                <li>2 tbsp sugar-free chocolate syrup</li>
+                <li>1 cup almond milk</li>
+                <li>1-2 cup ice</li>
+                <li>Maraschino cherries</li>
+                <li>Dark chocolate</li>
+              </ul>
+            </div>
+
+            <div class="blog-details-instructions">
+              <h3>Instructions</h3>
+              <ul>
+                <li>
+                  Place KETO//OS® Unleashed Eclipse, KETO//OS® NAT™ Swiss Cacao,
+                  almond milk, ice, and chocolate syrup in blender and pulse
+                  until smooth.
+                </li>
+                <li>
+                  Top with maraschino cherry and dark chocolate shavings. Enjoy!
+                </li>
+              </ul>
+
+              <p class="blog-details-instructions-details">
+                How do you get your chocolate covered fruit fix? Email us your
+                recipe to YUM@pruvithq.com and we’ll feature it on our blog!
+                Share a picture of your final Frappeketo™ and tag us @justpruvit
+                #ketocooking so we can see!
+              </p>
+            </div>
+
+            <div class="blog-details-category">
+              <a href="#" class="btn btn-light">Recipes</a>
+              <a href="#" class="btn btn-light">Keto Lifestyle</a>
+            </div>
+
+            <div class="blog-details-share">
+              <ul class="blog-details-social">
+                <li>
+                  <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-pinterest-p"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-linkedin-in"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fab fa-reddit-alien"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fas fa-envelope"></i>
+                  </a>
+                </li>
+              </ul>
+
+              <button  class="button button-primary blog-shop"> Shop </button>
+            </div>
+          </div>
+        </figure>
+      </article>
+    </section>
+    <%  }) %>
+
+    <!-- END of blog-details -->
+
+    <section class="blog-details-comments">
+      <article class="container">
+        <figure class="row">
+          <div class="col-sm-12">
+            <h3 class="blog-details-comments-heading">Responses</h3>
+
+            <div class="form-wrap">
+              <form class="short-form">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend comments-from-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <img src="../../static/user/images/woman.png" alt="" class="img-fluid" />
+                      </span>
+                    </div>
+                    <input
+                      type="text"
+                      class="sk-form-control form-control comments-from-control"
+                      placeholder="Write a replay..."
+                    />
+                  </div>
+                </div>
+              </form>
+
+              <form class="full-form">
+                <h6>Write your response</h6>
+                <p>
+                  Your email address will not be published. Required fields are
+                  marked *
+                </p>
+                <div class="form-group">
+                  <input
+                    type="name"
+                    class="form-control sk-form-control"
+                    placeholder="First name"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control sk-form-control"
+                    placeholder="Email address"
+                  />
+                </div>
+                <div class="form-group">
+                  <textarea
+                    type="text"
+                    class="form-control sk-form-control comments-textarea"
+                    placeholder="Your response"
+                  ></textarea>
+                </div>
+                <button class="button button-primary button-fullwidth">
+                  Submit
+                </button>
+              </form>
+            </div>
+
+            <div class="card comments-details">
+              <div class="card-body">
+                <div class="image">
+                  <img src="../../static/user/images/woman1.png" alt="woman" class="img-fluid" />
+                </div>
+                <div class="comments-content">
+                  <h5 class="card-title">Samantha Johns</h5>
+                  <h6 class="comments-date">Mar 3</h6>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                    commodo consequat
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card comments-details">
+              <div class="card-body">
+                <div class="image">
+                  <img src="../../static/user/images/woman2.png" alt="woman" class="img-fluid" />
+                </div>
+                <div class="comments-content">
+                  <h5 class="card-title">Jessie Smith</h5>
+                  <h6 class="comments-date">Mar 3</h6>
+                  <p class="card-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-center comments-seemore">
+              <a href="#"> see more </a>
+            </p>
+          </div>
+        </figure>
+      </article>
+    </section>
+    <!-- END of comments -->
+
+    <footer class="footer color-black-bg">
+      <div class="footer__top border-bottom-2">
+        <div class="container">
+          <div class="footer__logo-box">
+            <a href="#"
+              ><img
+                src="../../static/user/images/pruvitnow-logo-footer.png"
+                alt="Logo Footer"
+                class="img-fluid footer__logo"
+            /></a>
+          </div>
+
+          <div class="footer__nav">
+            <div class="footer__nav-content">
+              <div class="footer__nav-item footer__nav-item-d">
+                <figure class="footer__links">
+                  <p class="disclaimer-bold color-white-dsrk">Join</p>
+                  <ul class="footer__links-list">
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Join as Customer</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Join as Promoter</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Upgrade to Promoter</a
+                      >
+                    </li>
+                  </ul>
+                </figure>
+              </div>
+
+              <div class="footer__nav-item footer__nav-item-d">
+                <figure class="footer__links">
+                  <p class="disclaimer-bold color-white-dsrk">Company</p>
+                  <ul class="footer__links-list">
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >About</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Promoter Rewards</a
+                      >
+                    </li>
+                  </ul>
+                </figure>
+              </div>
+
+              <div class="footer__nav-item footer__nav-item-d">
+                <figure class="footer__links">
+                  <p class="disclaimer-bold color-white-dsrk">
+                    Help & Information
+                  </p>
+                  <ul class="footer__links-list">
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Help Center</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Privacy</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Refund Policy</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >Refund Policy</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" class="footer__link disclaimer-reg color-gray"
+                        >terms</a
+                      >
+                    </li>
+                  </ul>
+                </figure>
+              </div>
+
+              <!-- footer nav for mobile start -->
+              <div class="accordion footer__nav-item-m" id="accordionExample">
+                <div>
+                  <div class="" id="headingOne">
+                    <p
+                      class="mb-0 disclaimer-bold color-white-dsrk expend-icon"
+                      data-toggle="collapse"
+                      data-target="#collapseOne"
+                      aria-expanded="false"
+                      aria-controls="collapseOne"
+                      role="button"
+                    >
+                      Join
+                    </p>
+                  </div>
+
+                  <div
+                    id="collapseOne"
+                    class="collapse"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordionExample"
+                  >
+                    <ul class="footer__links-list-m">
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Join as Customer</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Join as Promoter</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Upgrade to Promoter</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="" id="headingTwo">
+                    <p
+                      class="mb-0 disclaimer-bold color-white-dsrk expend-icon"
+                      data-toggle="collapse"
+                      data-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                      role="button"
+                    >
+                      Company
+                    </p>
+                  </div>
+
+                  <div
+                    id="collapseTwo"
+                    class="collapse"
+                    aria-labelledby="headingTwo"
+                    data-parent="#accordionExample"
+                  >
+                    <ul class="footer__links-list-m">
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >About</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Promoter Rewards</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="" id="headingThree">
+                    <p
+                      class="mb-0 disclaimer-bold color-white-dsrk expend-icon"
+                      data-toggle="collapse"
+                      data-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                      role="button"
+                    >
+                      Help & Information
+                    </p>
+                  </div>
+
+                  <div
+                    id="collapseThree"
+                    class="collapse"
+                    aria-labelledby="headingThree"
+                    data-parent="#accordionExample"
+                  >
+                    <ul class="footer__links-list-m">
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Help Center</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Privacy</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Refund Policy</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >Refund Policy</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          href="#"
+                          class="footer__link disclaimer-reg color-gray"
+                          >terms</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- footer nav for mobile end -->
+
+              <div class="footer__nav-item">
+                <figure class="footer__links">
+                  <p class="disclaimer-bold color-white-dsrk">Follow</p>
+                  <ul class="footer__social-icon">
+                    <li>
+                      <a href="#" class="footer__social-img"
+                        ><img
+                          src="../../static/user/images/facebook.png"
+                          alt="facebook"
+                          class="img-fluid"
+                      /></a>
+                    </li>
+                    <li>
+                      <a href="#" class="footer__social-img"
+                        ><img
+                          src="../../static/user/images/twitter.png"
+                          alt="twitter"
+                          class="img-fluid"
+                      /></a>
+                    </li>
+                    <li>
+                      <a href="#" class="footer__social-img"
+                        ><img
+                          src="../../static/user/images/instagram.png"
+                          alt="instagram"
+                          class="img-fluid"
+                      /></a>
+                    </li>
+                  </ul>
+                </figure>
+              </div>
+              <div class="footer__nav-item">
+                <figure class="footer__links">
+                  <p
+                    class="disclaimer-bold color-white-dsrk footer__payments-title"
+                  >
+                    🔒 Secure Payments
+                  </p>
+                  <div class="footer__payments">
+                    <a href="#"
+                      ><img
+                        src="../../static/user/images/verified.png"
+                        alt="verified"
+                        class="img-fluid footer__verified"
+                    /></a>
+
+                    <ul class="footer__payments-icons">
+                      <li>
+                        <a href="#" class="footer__payments-img"
+                          ><img
+                            src="../../static/user/images/visa.png"
+                            alt="visa"
+                            class="img-fluid"
+                        /></a>
+                      </li>
+                      <li>
+                        <a href="#" class="footer__payments-img"
+                          ><img
+                            src="../../static/user/images/mastercard.png"
+                            alt="mastercard"
+                            class="img-fluid"
+                        /></a>
+                      </li>
+                      <li>
+                        <a href="#" class="footer__payments-img"
+                          ><img
+                            src="../../static/user/images/americanexpress.png"
+                            alt="americanexpress"
+                            class="img-fluid"
+                        /></a>
+                      </li>
+                    </ul>
+                  </div>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <%- include("footerblogdetails") %>
