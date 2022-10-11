@@ -2753,7 +2753,7 @@ select::-ms-expand {
     min-height: 130px; }
 
 .blog-slider-wrap .blog-inner-cont {
-  background-image: url(../images/blog-banner.png);
+  /* background-image: url(../images/blog-banner.png); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

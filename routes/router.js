@@ -79,6 +79,23 @@ router.get('/admin/postlists',function(req,res){
             }
         });
 });
+
+router.get('/admin/addpostdetails',function(req,res){
+    res.render("admin/addpostdetails");
+});
+
+router.get('/blogdetails',function(req,res){
+    User.find().exec((err,users)=>{
+        if(err){
+            res.send("Something went wrong");
+        } else{
+            res.render("user/blogdetails", { users:users, });
+
+        }
+    });
+});
+
+
 //edit an user route
 router.get('/update-user/:id',function(req,res){
     let id = req.params.id;
