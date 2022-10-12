@@ -1,7 +1,6 @@
 <%- include("header") %>
 
     <main class="blog">
-      <% users.forEach(function(user){ %>
       <section class="blog-top containerImage">
         <article class="container blog-container">
           <figure class="row blog-title">
@@ -17,6 +16,8 @@
 
           <figure class="row blog-slider-wrap">
             <div class="col-sm-12 sk-main__banner-slider">
+              <% users.forEach(function(user){ %>
+
               <div class="blog-inner-cont bg-image" style="background-image: url('../../static/uploads/<%= user.image %>');">
                 <div class="blog-text">
                   <p class="color-white blog-subtitle-s">
@@ -34,48 +35,12 @@
                   </div>
                 </div>
               </div>
+              <% }) %>
 
-              <div class="blog-inner-cont" style="background-image: url('../../static/uploads/<%= user.image %>');">
-                <div class="blog-text">
-                  <p class="color-white blog-subtitle-s">
-                    <%= user.title %>
-                  </p>
-                  <h2 class="color-white blog-subtitle">
-                    <%= user.content %> 
-                  </h2>
-                  <p class="blog-slider-description color-white">
-                    <%= user.shortDescription %>
-                  </p>
-                  <div class="blog-slider-btn">
-                    <a href="/blogdetails" 
-                      class="button button-primary buy-now-lg sk-main__banner-custom-btn"
-                    >Read Post</a>
-                  </div>
-                </div>
-              </div>
-              <div class="blog-inner-cont" style="background-image: url('../../static/uploads/<%= user.image %>');">
-                <div class="blog-text">
-                  <p class="color-white blog-subtitle-s">
-                    <%= user.title %>
-                  </p>
-                  <h2 class="color-white blog-subtitle">
-                    <%= user.content %> 
-                  </h2>
-                  <p class="blog-slider-description color-white">
-                    <%= user.shortDescription %>
-                  </p>
-                  <div class="blog-slider-btn">
-                    <a href="/blogdetails" 
-                      class="button button-primary buy-now-lg sk-main__banner-custom-btn"
-                    >Read Post</a>
-                  </div>
-                </div>
-              </div>
             </div>
           </figure>
         </article>
       </section>
-      <% }) %>
       <!-- end blog-top -->
       <section class="blog-topic">
         <article class="container">

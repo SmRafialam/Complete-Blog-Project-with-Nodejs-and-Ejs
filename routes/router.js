@@ -174,5 +174,9 @@ router.get('/delete-user/:id',(req,res)=>{
     })
 })
 
+//add category route
+router.get('/admin/addcategory',function(req,res){
+    res.render("admin/addcategory", { title:"Add Category" });
+});
 
 module.exports = router;
