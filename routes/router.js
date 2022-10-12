@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../model/model');
+const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
 
@@ -50,16 +51,27 @@ router.post('/addposts',upload,(req,res)=>{
 router.get('/users',function(req,res){
     res.send("All Users");
 });
+router.get('/categories',function(req,res){
+    res.send("All Categories");
+});
 
 router.get('/',function(req,res){
     User.find().exec((err,users)=>{
         if(err){
             res.send("Something went wrong");
         } else{
-            res.render("user/home", {users:users});
+            res.render("user/home", {users:users ,});
 
         }
     });
+    // Category.find().exec((err,categories)=>{
+    //     if(err){
+    //         res.send("Something went wrong");
+    //     } else{
+    //         res.render("user/home", {categories:categories ,});
+
+    //     }
+    // });
 });
 
 router.get('/admin/dashboard',function(req,res){
@@ -74,7 +86,7 @@ router.get('/admin/postlists',function(req,res){
             if(err){
                 res.send("Something went wrong");
             } else{
-                res.render("admin/postlists", { title:"Add Lists", users:users, });
+                res.render("admin/postlists", { title:" Post Lists", users:users, });
 
             }
         });
@@ -174,9 +186,46 @@ router.get('/delete-user/:id',(req,res)=>{
     })
 })
 
-//add category route
+//add & show category route
 router.get('/admin/addcategory',function(req,res){
     res.render("admin/addcategory", { title:"Add Category" });
 });
+
+router.get('/admin/categorylists',function(req,res){
+    Category.find().exec((err,categories)=>{
+        if(err){
+            res.send("Something went wrong");
+        } else{
+            res.render("admin/categorylists", { title:"Add Category Lists", categories:categories, });
+
+        }
+    });
+});
+
+router.post('/addcategory',upload,(req,res)=>{
+    const categorydata = {
+        title: req.body.title,
+        image: req.file.filename,
+        status: req.body.status,
+    }
+    console.log(categorydata);
+    const category = new Category(categorydata);
+    
+    category.save((err) => {
+        console.log(err);
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "Category added successfully",
+            };
+            res.redirect('/admin/categorylists');
+        }
+    })
+    
+});
+
 
 module.exports = router;

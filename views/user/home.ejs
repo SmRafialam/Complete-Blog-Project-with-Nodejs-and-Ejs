@@ -36,7 +36,6 @@
                 </div>
               </div>
               <% }) %>
-
             </div>
           </figure>
         </article>
@@ -52,59 +51,20 @@
 
           <figure class="row blog-topic-container">
             <div class="col-sm-6 col-md-3">
+              <% categories.forEach(function(category){ %>
+
               <div
                 class="topic-inner"
-                style="background-image: url(../../static/user/images/education.png)"
+                style="background-image: url('../../static/uploads/<%= category.image %>');"
               >
                 <div class="topic-inner-text color-white">
-                  <h3>Education</h3>
+                  <h3><%= category.title %></h3>
                 </div>
               </div>
+              <% }) %>
             </div>
 
-            <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(../../static/user/images/keto-lifestyle.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Keto lifestyle</h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(../../static/user/images/kids.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Kids</h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(../../static/user/images/recipe.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Recipes</h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(../../static/user/images/kids.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Kids</h3>
-                </div>
-              </div>
-            </div>
+            
           </figure>
         </article>
       </section>
