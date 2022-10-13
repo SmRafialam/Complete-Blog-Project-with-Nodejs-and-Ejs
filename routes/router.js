@@ -58,6 +58,7 @@ router.get('/categories',function(req,res){
 router.get('/',function(req,res){
 
     User.find().exec((err,users)=>{
+        users=users.reverse();
         if(err){ 
             res.send("Something went wrong");
         } else{
@@ -301,5 +302,6 @@ router.get('/delete-category/:id',(req,res)=>{
 
     })
 })
+
 
 module.exports = router;

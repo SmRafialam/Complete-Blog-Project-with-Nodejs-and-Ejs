@@ -64,28 +64,6 @@
             </div>
             <% }) %>
 
-            <!-- <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(./images/education.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Education</h3>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-sm-6 col-md-3">
-              <div
-                class="topic-inner"
-                style="background-image: url(./images/keto-lifestyle.png)"
-              >
-                <div class="topic-inner-text color-white">
-                  <h3>Keto lifestyle</h3>
-                </div>
-              </div>
-            </div> -->
-
 
             
           </figure>
@@ -101,24 +79,26 @@
                 <h3>Latest Post</h3>
               </div>
             </div>
+            <% users.forEach(function(user){ %>
             <div class="col-sm-12 col-md-4">
               <div class="latest-post-inner">
                 <div
                   class="latest-post-inner-img"
-                  style="background-image: url(../../static/user/images/keto-kedamy.png)"
+                  style="background-image: url('../../static/uploads/<%= user.image %>')"
                 ></div>
 
                 <div class="latest-post-inner-text">
                   <p>
                     <a href="#" class="color-black">
-                      Chocolate-Covered Cherry Frappeketo™
+                      <%= user.title %>
                     </a>
                   </p>
                 </div>
               </div>
             </div>
+            <% }) %>
 
-            <div class="col-sm-12 col-md-4">
+            <!-- <div class="col-sm-12 col-md-4">
               <div class="latest-post-inner">
                 <div
                   class="latest-post-inner-img"
@@ -200,7 +180,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="col-12 text-center blog-posts-seemore">
               <a href="#"> see more </a>
             </div>
