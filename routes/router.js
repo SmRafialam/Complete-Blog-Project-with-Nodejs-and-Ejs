@@ -56,22 +56,23 @@ router.get('/categories',function(req,res){
 });
 
 router.get('/',function(req,res){
+
     User.find().exec((err,users)=>{
-        if(err){
+        if(err){ 
             res.send("Something went wrong");
         } else{
-            res.render("user/home", {users:users ,});
-
+            Category.find().exec((err,categories)=>{
+                if(err){
+                    res.send("Something went wrong");
+                } else{
+                     res.render("user/home", {users:users,categories:categories});
+        
+                }
+            });
         }
     });
-    // Category.find().exec((err,categories)=>{
-    //     if(err){
-    //         res.send("Something went wrong");
-    //     } else{
-    //         res.render("user/home", {categories:categories ,});
 
-    //     }
-    // });
+    
 });
 
 router.get('/admin/dashboard',function(req,res){

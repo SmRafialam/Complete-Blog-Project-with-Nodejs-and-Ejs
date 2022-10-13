@@ -50,9 +50,9 @@
           </div>
 
           <figure class="row blog-topic-container">
-            <div class="col-sm-6 col-md-3">
-              <% categories.forEach(function(category){ %>
+            <% categories.forEach(function(category){ %>
 
+            <div class="col-sm-6 col-md-3">
               <div
                 class="topic-inner"
                 style="background-image: url('../../static/uploads/<%= category.image %>');"
@@ -61,8 +61,31 @@
                   <h3><%= category.title %></h3>
                 </div>
               </div>
-              <% }) %>
             </div>
+            <% }) %>
+
+            <!-- <div class="col-sm-6 col-md-3">
+              <div
+                class="topic-inner"
+                style="background-image: url(./images/education.png)"
+              >
+                <div class="topic-inner-text color-white">
+                  <h3>Education</h3>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <div
+                class="topic-inner"
+                style="background-image: url(./images/keto-lifestyle.png)"
+              >
+                <div class="topic-inner-text color-white">
+                  <h3>Keto lifestyle</h3>
+                </div>
+              </div>
+            </div> -->
+
 
             
           </figure>
