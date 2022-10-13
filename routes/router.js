@@ -226,6 +226,79 @@ router.post('/addcategory',upload,(req,res)=>{
     })
     
 });
+//edit an category route
+router.get('/update-category/:id',function(req,res){
+    let id = req.params.id;
+    Category.findById(id, (err,category)=>{
+        if(err){
+            res.redirect("/admin/postlists");
+        }else{
+                res.render("admin/update_category",{
+                    title: "Update user",
+                    category:category,
 
+                })
+            }
+        
+    })
+});
+//update an category route
+router.post('/update_category/:id',upload,function(req,res){
+    let id = req.params.id;
+    let new_image = "";
+    if(req.file){
+        new_image = req.file.filename;
+        try{
+            fs.unlinkSync('./uploads/'+req.body.old_image);
+        }catch(err){
+            console.log(err);
+        }
+    }else{
+        new_image = req.body.old_image;
+    }
+
+
+    Category.findByIdAndUpdate(id, {
+        title: req.body.title,
+        image: new_image,
+        status: req.body.status,
+    },
+    (err,result)=>{
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "Category added successfully",
+            };
+            res.redirect('/admin/categorylists');
+        }
+    });
+});
+//Delete an category route
+router.get('/delete-category/:id',(req,res)=>{
+    let id = req.params.id;
+    Category.findByIdAndRemove(id,(err,result)=>{
+        if(result.image!=''){
+            try{
+                fs.unlinkSync('./uploads/'+result.image);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "Category added successfully",
+            };
+            res.redirect('/admin/categorylists');
+        }
+
+    })
+})
 
 module.exports = router;
