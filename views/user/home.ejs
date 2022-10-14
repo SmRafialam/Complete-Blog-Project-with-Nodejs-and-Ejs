@@ -17,7 +17,7 @@
           <figure class="row blog-slider-wrap">
             <div class="col-sm-12 sk-main__banner-slider">
               <% users.forEach(function(user){ %>
-
+                
               <div class="blog-inner-cont bg-image" style="background-image: url('../../static/uploads/<%= user.image %>');">
                 <div class="blog-text">
                   <p class="color-white blog-subtitle-s">
@@ -79,6 +79,7 @@
                 <h3>Latest Post</h3>
               </div>
             </div>
+            <% if(posts != ''){ %> 
             <% users.forEach(function(user){ %>
             <div class="col-sm-12 col-md-4">
               <div class="latest-post-inner">
@@ -89,7 +90,7 @@
 
                 <div class="latest-post-inner-text">
                   <p>
-                    <a href="#" class="color-black">
+                    <a href="/user/<%= user._id %>" class="color-black">
                       <%= user.title %>
                     </a>
                   </p>
@@ -97,7 +98,7 @@
               </div>
             </div>
             <% }) %>
-
+            <% } %>
             <!-- <div class="col-sm-12 col-md-4">
               <div class="latest-post-inner">
                 <div

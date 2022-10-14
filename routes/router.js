@@ -42,7 +42,7 @@ router.post('/addposts',upload,(req,res)=>{
             };
             res.redirect('/admin/postlists');
         }
-    })
+    });
     
 });
 
@@ -56,8 +56,11 @@ router.get('/categories',function(req,res){
 });
 
 router.get('/',function(req,res){
-
+    const limitnumber = 3;
+        const latest = User.find({}).sort({_id: -1}).limit(limitnumber);
+        const posts = { latest };
     User.find().exec((err,users)=>{
+        
         users=users.reverse();
         if(err){ 
             res.send("Something went wrong");
@@ -66,7 +69,7 @@ router.get('/',function(req,res){
                 if(err){
                     res.send("Something went wrong");
                 } else{
-                     res.render("user/home", {users:users,categories:categories});
+                     res.render("user/home", {users:users,categories:categories,posts});
         
                 }
             });

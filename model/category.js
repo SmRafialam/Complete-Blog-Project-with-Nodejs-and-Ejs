@@ -10,11 +10,11 @@ const categorySchema = new mongoose.Schema({
     },
     status:String,
 
-    users: [
+    users: 
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: [mongoose.Schema.Types.ObjectId],
             ref: 'User'
         }
-    ]
+    
 });
 module.exports = mongoose.model("Category",categorySchema);
