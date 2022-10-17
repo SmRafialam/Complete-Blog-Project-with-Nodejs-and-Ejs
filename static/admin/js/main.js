@@ -6,8 +6,6 @@
         $('#multiple-checkboxes').multiselect({
           includeSelectAllOption: true,
         });
-        $(".table").DataTable({
-          order: [0, 'desc']
-        });
     });
+	 
 })(jQuery);
