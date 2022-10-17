@@ -12,7 +12,7 @@
     <div class="br-pagetitle">
     <div class="container-fluid p-5">
         <form action="/postlists" method="post">
-            <% if(users != ''){ %>
+            <% if(posts != ''){ %>
                 <table class="table">
                     <thead class="thead-dark bg-dark text-white">
                         <tr>
@@ -20,25 +20,31 @@
                             <th>Title</th>
                             <th>Content</th>
                             <th>Short Description</th>
+                            <th>Categories</th>
                             <th>Image</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-						<% users.forEach((row,index)=>{ %>
+						<% posts.forEach((row,index)=>{ %>
 							<tr class="align-items-center">
 								<td><%= index %></td>
                                 <td><%= row.title %></td>
                                 <td><%= row.content %></td>
                                 <td><%= row.shortDescription %></td>
+                                <% if(row.categories[0]){ %>
+                                <td>
+                                    <%= row.categories[0].title %>
+                                </td>
+                                <% } %>
                                 <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
                                 <td><%= row.status %></td>
                                 <td class="">
-                                    <a href="/update-user/<%=row._id%>" class="btn border-shadow updatebtn">
+                                    <a href="/update-post/<%=row._id%>" class="btn border-shadow updatebtn">
                                         <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
                                     </a>
-                                    <a href="/delete-user/<%=row._id%>" class="btn border-shadow deletebtn" >
+                                    <a href="/delete-post/<%=row._id%>" class="btn border-shadow deletebtn" >
                                         <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
                                     </a>
                                 </td>
@@ -47,7 +53,7 @@
                     </tbody>
                 </table>
             <% } else { %>
-                <h1 class="text-cwntwr text-secondary my-5">No users found in the datrabase!</h1>
+                <h1 class="text-cwntwr text-secondary my-5">No posts found in the database!</h1>
             <% } %>
             
         </form>

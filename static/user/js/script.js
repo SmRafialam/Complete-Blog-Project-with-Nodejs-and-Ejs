@@ -93,6 +93,7 @@ $('.sk-main__banner-slider').slick({
  
     $('.sk-product-slider-for').slick('slickGoTo', goToSingleSlide);
   });
+
 });
 
 

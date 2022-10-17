@@ -10,10 +10,10 @@ const categorySchema = new mongoose.Schema({
     },
     status:String,
 
-    users: 
+    posts: 
         {
             type: [mongoose.Schema.Types.ObjectId],
-            ref: 'User'
+            ref: 'Post'
         }
     
 });

@@ -16,7 +16,7 @@
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="hidden" name="id" value="">
+                    <input type="hidden" name="postId">
                     <input name="title" class="form-control" placeholder="Enter title" required>
                 </div>
                 <div class="form-group">
@@ -31,6 +31,13 @@
                     <label for="image" >Thumbnail</label>
                     <input name="image" class="form-control" type="file" required>
                 </div>
+                <div class="form-group">
+                    <select id="catDropdown" name="catId" class="ui fluid dropdown">
+                                    <% categories.forEach(category => { %>
+                                        <option value= "<%= category._id %>"> <%= category.title %> </option>
+                                    <% }); %>
+                    </select>
+                </div>     
                 <div class="form-group py-2">
                     <label for="status" class="text-dark">Status: </label>
                     <div class="radio form-check form-check-inline">
