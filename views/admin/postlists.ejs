@@ -13,7 +13,7 @@
     <div class="container-fluid p-5">
         <form action="/postlists" method="post">
             <% if(posts != ''){ %>
-                <table class="table">
+                <table id="table">
                     <thead class="thead-dark bg-dark text-white">
                         <tr>
                             <th>Id</th>
@@ -35,7 +35,9 @@
                                 <td><%= row.shortDescription %></td>
                                 <% if(row.categories[0]){ %>
                                 <td>
-                                    <%= row.categories[0].title %>
+                                    <% row.categories.forEach((cat,index)=>{ %>
+                                        <%= cat.title %>
+                                    <% }) %>
                                 </td>
                                 <% } %>
                                 <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>

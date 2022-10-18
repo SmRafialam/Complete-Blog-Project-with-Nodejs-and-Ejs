@@ -15,31 +15,32 @@
             <form method="post" action="/addposts" id="add-form" enctype="multipart/form-data">
 
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">Title:</label>
                     <input type="hidden" name="postId">
                     <input name="title" class="form-control" placeholder="Enter title" required>
                 </div>
                 <div class="form-group">
-                    <label for="content">Content</label>
+                    <label for="content">Content:</label>
                     <textarea name="content" class="form-control" placeholder="Enter Content" required></textarea> 
                 </div>
                 <div class="form-group">
-                    <label for="shortDescription">Short Description</label>
-                    <textarea name="shortDescription" class="form-control" placeholder="Enter Short Description" required></textarea> 
+                    <label for="shortDescription">Short Description:</label>
+                    <textarea name="shortDescription" id="my-expressjs-tinymce-app" class="form-control" placeholder="Enter Short Description"></textarea> 
                 </div>
                 <div class="form-group">
-                    <label for="image" >Thumbnail</label>
+                    <label for="image" >Thumbnail:</label>
                     <input name="image" class="form-control" type="file" required>
                 </div>
                 <div class="form-group">
+                    <label for="catId" >Category: </label>
                     <select id="multiple-checkboxes" name="catId" class="ui fluid dropdown" multiple="multiple">
-                                    <% categories.forEach(category => { %>
-                                        <option value= "<%= category._id %>"> <%= category.title %> </option>
-                                    <% }); %>
+                        <% categories.forEach(category => { %>
+                            <option value= "<%= category._id %>"> <%= category.title %> </option>
+                        <% }); %>
                     </select>
                 </div>     
                 <div class="form-group py-2">
-                    <label for="status" class="text-dark">Status: </label>
+                    <label for="status" class="text-light">Status: </label>
                     <div class="radio form-check form-check-inline">
                         <input type="radio" id="radio4" name="status" value="Active" required>
                         <label for="radio4" >Active</label>
