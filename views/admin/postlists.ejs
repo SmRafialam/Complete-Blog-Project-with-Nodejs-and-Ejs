@@ -35,14 +35,15 @@
                                 <td><%= row.shortDescription %></td>
                                 <% if(row.categories[0]){ %>
                                 <td>
-                                    <% row.categories.forEach((cat,index)=>{ %>
+                                    <% row.categories.forEach((cat,i,arr)=>{ %>
                                         <%= cat.title %>
+                                        <%= ( arr.length > 0 && i < arr.length-1 ? ( i == arr.length-2 ? ' and ' : ', ' ) : '' ) %></arr.length-1>
                                     <% }) %>
                                 </td>
                                 <% } %>
                                 <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
                                 <td><%= row.status %></td>
-                                <td class="">
+                                <td>
                                     <a href="/update-post/<%=row._id%>" class="btn border-shadow updatebtn">
                                         <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
                                     </a>
