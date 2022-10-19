@@ -68,8 +68,6 @@ router.post('/addposts',upload,async(req,res)=>{
     
 });
 
-
-
 router.get('/posts',function(req,res){
     res.send("All posts");
 });
@@ -81,13 +79,17 @@ router.get('/',function(req,res){
     // const limitnumber = 3;
     //     const latest = Post.find({}).sort({_id: -1}).limit(limitnumber);
     //     const posts = { latest };
-        Post.find().exec((err,posts)=>{
+        Post.find({
+            status: 'Active'
+        }).exec((err,posts)=>{
         
         posts=posts.reverse();
         if(err){ 
             res.send("Something went wrong");
         } else{
-            Category.find().exec((err,categories)=>{
+            Category.find({
+                status: 'Active'
+            }).exec((err,categories)=>{
                 if(err){
                     res.send("Something went wrong");
                 } else{
@@ -119,7 +121,6 @@ router.get('/admin/addposts',async(req,res)=>{
 router.get('/admin/postlists',async(req,res)=>{
     try{
         const posts = await Post.find({
-            status: 'Active'
         }).populate("categories");
         res.render("admin/postlists", { title:"Post Lists", posts:posts, });
     }
@@ -137,16 +138,34 @@ router.get('/admin/postlists',async(req,res)=>{
         // });
 });
 
-router.get('/admin/addpostdetails',function(req,res){
-    res.render("admin/addpostdetails");
+//add & show post details route
+router.get('/admin/addPostDetails',async(req,res)=>{
+    try{
+        
+        res.render("admin/addPostDetails", { title:"Add Post Details"});
+    }
+    catch(err){
+        res.send("Something went wrong");
+    }
 });
+router.get('/admin/postDetailsLists',async(req,res)=>{
+    try{
+        const posts = await Post.find({
+            status: 'Active'
+        }).populate("categories");
+        res.render("admin/postDetailsLists", { title:"Post Details Lists", posts:posts, });
+    }
+    catch(err){
+        res.send("Something went wrong");
 
-router.get('/blogdetails',function(req,res){
-    Post.find().exec((err,posts)=>{
+    }
+});
+router.get('/postDetailsLists',function(req,res){
+    Post.find().exec((err,postDetails)=>{
         if(err){
             res.send("Something went wrong");
         } else{
-            res.render("user/blogdetails", { posts:posts, });
+            res.render("user/blogdetails", { postDetails:postDetails, });
 
         }
     });

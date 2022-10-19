@@ -1,0 +1,57 @@
+<%- include("header") %>
+
+<body>
+
+  <%- include("leftbar") %>
+
+
+  <%- include("navbar") %>
+
+<!-- main body -->
+<div class="br-mainpanel">
+    <div class="br-pagetitle">
+    <div class="container-fluid p-5">
+        <form action="/postDetailsLists" method="post">
+                <table id="table">
+                    <thead class="thead-dark bg-dark text-white">
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Short Description</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr class="align-items-center">
+                                <td><%= index %></td>
+                                <td><%= row.title %></td>
+                                <td><%= row.shortDescription %></td>
+                            
+                                <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
+                                <td><%= row.status %></td>
+                                <td>
+                                    <a href="/update-post/<%=row._id%>" class="btn border-shadow updatebtn">
+                                        <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
+                                    </a>
+                                    <a href="/delete-post/<%=row._id%>" class="btn border-shadow deletebtn" >
+                                        <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
+                                    </a>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+           
+            
+        </form>
+    </div>
+</div>
+</div>
+<!-- main body end-->
+
+
+<!-- footer -->
+<%- include("footer") %> 
+<!-- footer -->
+
