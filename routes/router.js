@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/model');
+const PostDetails = require('../model/model');
 const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
@@ -25,6 +26,7 @@ router.post('/addposts',upload,async(req,res)=>{
         content: req.body.content,
         shortDescription: req.body.shortDescription,
         image: req.file.filename,
+        featuredImage: req.body.featuredImage.checked,
         status: req.body.status,
         categories: req.body.catId,
 
@@ -52,6 +54,7 @@ router.post('/addposts',upload,async(req,res)=>{
             error: "There was a server side error!",
         });
     }
+    
     // post.save((err) => {
     //     console.log(err);
     //     if(err){
@@ -121,6 +124,7 @@ router.get('/admin/addposts',async(req,res)=>{
 router.get('/admin/postlists',async(req,res)=>{
     try{
         const posts = await Post.find({
+            type: "true"
         }).populate("categories");
         res.render("admin/postlists", { title:"Post Lists", posts:posts, });
     }
@@ -128,16 +132,31 @@ router.get('/admin/postlists',async(req,res)=>{
         res.send("Something went wrong");
 
     }
-        // post.find().exec((err,posts)=>{
-        //     if(err){
-        //         res.send("Something went wrong");
-        //     } else{
-        //         res.render("admin/postlists", { title:" Post Lists", posts:posts, });
-
-        //     }
-        // });
 });
+//insert an post details into database route
+router.post('/addPostDetails',upload,async(req,res)=>{
+    const postdetailsdata = {
+        title: req.body.title,
+        shortDescription: req.body.shortDescription,
+        image: req.file.filename,
+        status: req.body.status,
+    }
+    console.log(postdetailsdata);
+    const postdetails = new PostDetails(postdetailsdata);
+    postdetails.save((err) => {
+        console.log(err);
+        if(err){
+            res.json({message: err.message, type: 'danger'});
 
+        }else{
+            req.message={
+                type: "success",
+                message: "post Details added successfully",
+            };
+            res.redirect('/admin/postDetailsLists');
+        }
+    });
+});
 //add & show post details route
 router.get('/admin/addPostDetails',async(req,res)=>{
     try{
@@ -150,17 +169,14 @@ router.get('/admin/addPostDetails',async(req,res)=>{
 });
 router.get('/admin/postDetailsLists',async(req,res)=>{
     try{
-        const posts = await Post.find({
-            status: 'Active'
-        }).populate("categories");
-        res.render("admin/postDetailsLists", { title:"Post Details Lists", posts:posts, });
+        res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, });
     }
     catch(err){
         res.send("Something went wrong");
 
     }
 });
-router.get('/postDetailsLists',function(req,res){
+router.get('/postDetails',function(req,res){
     Post.find().exec((err,postDetails)=>{
         if(err){
             res.send("Something went wrong");
@@ -274,6 +290,8 @@ router.get('/admin/categorylists',async(req,res)=>{
     // });
 });
 
+
+//insert an category into database route
 router.post('/addcategory',upload, async(req,res)=>{
     const categorydata = {
         title: req.body.title,

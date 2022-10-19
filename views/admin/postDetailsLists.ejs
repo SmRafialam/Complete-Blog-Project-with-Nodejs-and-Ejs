@@ -12,6 +12,8 @@
     <div class="br-pagetitle">
     <div class="container-fluid p-5">
         <form action="/postDetailsLists" method="post">
+            <% if(postdetails != ''){ %>
+
                 <table id="table">
                     <thead class="thead-dark bg-dark text-white">
                         <tr>
@@ -24,25 +26,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% postdetails.forEach((post,index)=>{ %>
                             <tr class="align-items-center">
                                 <td><%= index %></td>
-                                <td><%= row.title %></td>
-                                <td><%= row.shortDescription %></td>
+                                <td><%= post.title %></td>
+                                <td><%= post.shortDescription %></td>
                             
-                                <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
-                                <td><%= row.status %></td>
+                                <td> <img src="../../static/uploads/<%=post.image %>" width="50px" class="img-thumbnail"> </td>
+                                <td><%= post.status %></td>
                                 <td>
-                                    <a href="/update-post/<%=row._id%>" class="btn border-shadow updatebtn">
+                                    <a href="/update-post/<%=post._id%>" class="btn border-shadow updatebtn">
                                         <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
                                     </a>
-                                    <a href="/delete-post/<%=row._id%>" class="btn border-shadow deletebtn" >
+                                    <a href="/delete-post/<%=post._id%>" class="btn border-shadow deletebtn" >
                                         <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
                                     </a>
                                 </td>
                             </tr>
+                        <% }) %> 
                     </tbody>
                 </table>
-           
+                <% } else { %>
+                    <h1 class="text-cwntwr text-secondary my-5">No posts found in the database!</h1>
+                <% } %>
             
         </form>
     </div>

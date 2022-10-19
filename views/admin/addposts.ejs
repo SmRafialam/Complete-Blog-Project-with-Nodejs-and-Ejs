@@ -32,6 +32,10 @@
                     <input name="image" class="form-control" type="file" required>
                 </div>
                 <div class="form-group">
+                    <label for="featuredImage" >Featured Image:</label>
+                    <input form="add-form" type="checkbox" name="featuredImage" >
+                </div>
+                <div class="form-group">
                     <label for="catId" >Category: </label>
                     <select id="multiple-checkboxes" name="catId" class="ui fluid dropdown" multiple="multiple">
                         <% categories.forEach(category => { %>

@@ -16,6 +16,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         //required: true,
     },
+    featuredImage: {
+        type: Boolean,
+        // required: true,
+    }, 
     status:String,
     categories: [
         {
