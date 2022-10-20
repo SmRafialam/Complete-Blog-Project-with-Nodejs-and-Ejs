@@ -22,7 +22,7 @@
                             <th>Short Description</th>
                             <th>Categories</th>
                             <th>Image</th>
-                            <th>Featured Images</th>
+                            <th>Featured Items</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -43,9 +43,7 @@
                                 </td>
                                 <% } %>
                                 <td> <img src="../../static/uploads/<%=row.image %>" width="50px" class="img-thumbnail"> </td>
-                                <td>
-                                    <input id="radio"  class="checkbox" type="checkbox" name="featuredImage"  value="<%=row._id%>" <%= row.type==true ? "checked" : "" %>>
-                                </td>
+                                <td><%= row.featuredItem %></td>
                                 <td><%= row.status %></td>
                                 <td>
                                     <a href="/update-post/<%=row._id%>" class="btn border-shadow updatebtn">

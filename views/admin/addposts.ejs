@@ -32,8 +32,15 @@
                     <input name="image" class="form-control" type="file" required>
                 </div>
                 <div class="form-group">
-                    <label for="featuredImage" >Featured Image:</label>
-                    <input form="add-form" type="checkbox" name="featuredImage" >
+                        <label for="featuredItem" class="text-light">Featured Item: </label>
+                        <div class="featuredItem form-check form-check-inline">
+                            <input type="checkbox" id="radio4" name="featuredItem" value=true >
+                            <label for="radio4" >True</label>
+                        </div>
+                        <div class="featuredItem form-check form-check-inline">
+                            <input type="checkbox" id="radio5" name="featuredItem" value=false >
+                            <label for="radio5">False</label>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label for="catId" >Category: </label>

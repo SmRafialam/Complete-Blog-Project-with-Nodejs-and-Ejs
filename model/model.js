@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         //required: true,
     },
-    featuredImage: {
+    featuredItem: {
         type: Boolean,
         // required: true,
     }, 

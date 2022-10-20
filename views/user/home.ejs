@@ -17,7 +17,7 @@
           <figure class="row blog-slider-wrap">
             <div class="col-sm-12 sk-main__banner-slider">
               <% posts.forEach(function(post){ %>
-                
+                <% if(post.featuredItem == true){ %>
               <div class="blog-inner-cont bg-image" style="background-image: url('../../static/uploads/<%= post.image %>');">
                 <div class="blog-text">
                   <p class="color-white blog-subtitle-s">
@@ -35,6 +35,7 @@
                   </div>
                 </div>
               </div>
+              <% } %>
               <% }) %>
             </div>
           </figure>

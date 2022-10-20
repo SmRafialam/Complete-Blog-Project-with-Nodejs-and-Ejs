@@ -33,7 +33,17 @@
                     <img src="/../../static/uploads/<%= post.image %>" width="100" class="img-thumbnail" my-1>
                 </div>
                 <input type="hidden" name="old_image" value="<%= post.image %>">
-              
+                <div class="form-group">
+                    <label for="featuredItem" class="text-light">Featured Item: </label>
+                    <div class="featuredItem form-check form-check-inline">
+                        <input type="checkbox" id="radio4" name="featuredItem" value=true <%= post.featuredItem==true?'checked':'' %>>
+                        <label for="radio4" >True</label>
+                    </div>
+                    <div class="featuredItem form-check form-check-inline">
+                        <input type="checkbox" id="radio5" name="featuredItem" value=false <%= post.featuredItem==false?'checked':'' %>>
+                        <label for="radio5">False</label>
+                    </div>
+                </div>
                 <div class="form-group py-2">
                     <label for="status" class="text-light">Status: </label>
                     <div class="radio form-check form-check-inline">

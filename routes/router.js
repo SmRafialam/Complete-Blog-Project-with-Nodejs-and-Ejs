@@ -26,7 +26,7 @@ router.post('/addposts',upload,async(req,res)=>{
         content: req.body.content,
         shortDescription: req.body.shortDescription,
         image: req.file.filename,
-        featuredImage: req.body.featuredImage.checked,
+        featuredItem: req.body.featuredItem,
         status: req.body.status,
         categories: req.body.catId,
 
@@ -225,6 +225,7 @@ router.post('/update_post/:id',upload,function(req,res){
         content: req.body.content,
         shortDescription: req.body.shortDescription,
         image: new_image,
+        featuredItem: req.body.featuredItem,
         status: req.body.status,
     },
     (err,result)=>{
