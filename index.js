@@ -4,9 +4,9 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const session = require('express-session');
 const fs = require('fs');
-
 const connectDB = require('./server/database/connection'); 
 const { urlencoded } = require('express');
+const path = require('path');
 
 const PORT = process.env.PORT ||4000;
 
@@ -30,6 +30,7 @@ app.use(
 //     next();
 // });
 
+app.use('/node_modules/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //route prefix
 app.use("",require("./routes/router"));

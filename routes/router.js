@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/model');
-const PostDetails = require('../model/model');
+const PostDetails = require('../model/postdetails');
 const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
@@ -137,6 +137,7 @@ router.get('/admin/postlists',async(req,res)=>{
 router.post('/addPostDetails',upload,async(req,res)=>{
     const postdetailsdata = {
         title: req.body.title,
+        content: req.body.content,
         shortDescription: req.body.shortDescription,
         image: req.file.filename,
         status: req.body.status,
@@ -169,6 +170,7 @@ router.get('/admin/addPostDetails',async(req,res)=>{
 });
 router.get('/admin/postDetailsLists',async(req,res)=>{
     try{
+        const postdetails = await PostDetails.find({});
         res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, });
     }
     catch(err){
@@ -177,7 +179,7 @@ router.get('/admin/postDetailsLists',async(req,res)=>{
     }
 });
 router.get('/postDetails',function(req,res){
-    Post.find().exec((err,postDetails)=>{
+    PostDetails.find().exec((err,postDetails)=>{
         if(err){
             res.send("Something went wrong");
         } else{
@@ -186,6 +188,88 @@ router.get('/postDetails',function(req,res){
         }
     });
 });
+//edit post details route
+router.get('/update-postDetails/:id',function(req,res){
+    let id = req.params.id;
+    PostDetails.findById(id, (err,postdetails)=>{
+        if(err){
+            res.redirect("/admin/postDetailsLists");
+        }else{
+                res.render("admin/update_postDetails",{
+                    title: "Update post Details",
+                    postdetails:postdetails,
+
+                })
+            }
+        
+    })
+});
+//update an post details route
+router.post('/update_postDetails/:id',upload,function(req,res){
+    let id = req.params.id;
+    let new_image = "";
+    if(req.file){
+        new_image = req.file.filename;
+        try{
+            fs.unlinkSync('./uploads/'+req.body.old_image);
+        }catch(err){
+            console.log(err);
+        }
+    }else{
+        new_image = req.body.old_image;
+    }
+
+
+    PostDetails.findByIdAndUpdate(id, {
+        title: req.body.title,
+        content: req.body.content,
+        shortDescription: req.body.shortDescription,
+        image: new_image,
+        status: req.body.status,
+    },
+    (err,result)=>{
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "post details added successfully",
+            };
+            res.redirect('/admin/postDetailsLists');
+        }
+    });
+});
+//Delete an post details route
+router.get('/delete-postDetails/:id',(req,res)=>{
+    let id = req.params.id;
+    PostDetails.findByIdAndRemove(id,(err,result)=>{
+        if(result.image!=''){
+            try{
+                fs.unlinkSync('./uploads/'+result.image);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "post details removed successfully",
+            };
+            res.redirect('/admin/postDetailsLists');
+        }
+
+    });
+});
+
+//post comment route
+// router.post("/do-comment",function(req,res){
+//     PostDetails.collection("posts").
+// })
+
 
 
 //edit an post route
@@ -259,7 +343,7 @@ router.get('/delete-post/:id',(req,res)=>{
         }else{
             req.message={
                 type: "success",
-                message: "post added successfully",
+                message: "post removed successfully",
             };
             res.redirect('/admin/postlists');
         }
@@ -281,6 +365,7 @@ router.get('/admin/categorylists',async(req,res)=>{
         res.send("Something went wrong");
 
     }
+
     // Category.find().populate("posts").exec((err,categories)=>{
     //     if(err){
     //         res.send("Something went wrong");

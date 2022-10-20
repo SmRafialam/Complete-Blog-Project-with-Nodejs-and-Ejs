@@ -10,15 +10,16 @@
 <!-- main body -->
 <div class="br-mainpanel">
     <div class="br-pagetitle">
-    <div class="container-fluid p-5">
+    <div class="container-fluid p-5 d-flex justify-content-center">
         <form action="/postDetailsLists" method="post">
             <% if(postdetails != ''){ %>
 
-                <table id="table">
+                <table id="table" class="text-center">
                     <thead class="thead-dark bg-dark text-white">
                         <tr>
                             <th>Id</th>
                             <th>Title</th>
+                            <th>Content</th>
                             <th>Short Description</th>
                             <th>Image</th>
                             <th>Status</th>
@@ -30,15 +31,16 @@
                             <tr class="align-items-center">
                                 <td><%= index %></td>
                                 <td><%= post.title %></td>
+                                <td><%= post.content %></td>
                                 <td><%= post.shortDescription %></td>
                             
                                 <td> <img src="../../static/uploads/<%=post.image %>" width="50px" class="img-thumbnail"> </td>
                                 <td><%= post.status %></td>
                                 <td>
-                                    <a href="/update-post/<%=post._id%>" class="btn border-shadow updatebtn">
+                                    <a href="/update-postDetails/<%=post._id%>" class="btn border-shadow updatebtn">
                                         <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
                                     </a>
-                                    <a href="/delete-post/<%=post._id%>" class="btn border-shadow deletebtn" >
+                                    <a href="/delete-postDetails/<%=post._id%>" class="btn border-shadow deletebtn" >
                                         <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
                                     </a>
                                 </td>
