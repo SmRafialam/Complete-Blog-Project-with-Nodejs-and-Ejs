@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../model/model');
 const PostDetails = require('../model/postdetails');
+const DoComments = require('../model/doComments');
 const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
@@ -19,8 +20,13 @@ var upload = multer({
     storage:storage,
 }).single("image");
 
+
+
 //insert an post into database route
 router.post('/addposts',upload,async(req,res)=>{
+    var myContent = tinymce.get("myTextarea").getContent();
+    localStorage.setItem("myContent", myContent);
+
     const postdata = {
         title: req.body.title,
         content: req.body.content,
@@ -350,6 +356,48 @@ router.get('/delete-post/:id',(req,res)=>{
 
     })
 })
+
+//POST FOR COMMENT BOX
+
+// router.post('/do-comment',function(req,res){
+//     PostDetails.collection("postdetails").update({"_id": ObjectId(req.body.postDetails_id)},{
+//         $push: {
+//             "comments":{
+//                 name: req.body.name,
+//                 email: req.body.email,
+//                 comment: req.body.comment,
+//             }
+//         },function(error,post){
+//             res.send("comment successfull");
+//         }
+//     });
+// })
+router.post('/doComment',async(req,res)=>{
+    const doCommentdata = {
+        name: req.body.name,
+        email: req.body.email,
+        comment: req.body.comment,
+    }
+    console.log(doCommentdata);
+    const doComments = new DoComments(doCommentdata);
+    doComments.save((err) => {
+        console.log(err);
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "post Comments added successfully",
+            };
+            res.redirect('/admin/postDetailsLists');
+        }
+    });
+});
+
+
+
+
 
 //add & show category route
 router.get('/admin/addcategory',function(req,res){

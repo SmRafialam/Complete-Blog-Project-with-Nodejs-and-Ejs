@@ -25,14 +25,12 @@
                 </div>
                 <div class="form-group">
                     <label for="shortDescription">Short Description:</label>
-                    <textarea name="shortDescription" id="my-expressjs-tinymce-app" class="form-control" placeholder="Enter Short Description"></textarea> 
+                    <textarea name="shortDescription" id="myTextarea" class="form-control editorOne" placeholder="Enter Short Description"></textarea> 
                 </div>
-
                 <div class="form-group">
                     <label for="image" >Thumbnail:</label>
                     <input name="image" class="form-control" type="file" required>
                 </div>
-                   
                 <div class="form-group py-2">
                     <label for="status" class="text-light">Status: </label>
                     <div class="radio form-check form-check-inline">
@@ -50,9 +48,8 @@
             </form>   
         </div>
         <div class="form-group col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
-            <form id="algin-form" method="POST" onsubmit="return doComment(this);">
+            <form id="algin-form" method="POST" action="/doComment" id="doComment">
                 <h3>Leave a comment:- </h3>
-                <input type="hidden" name="post_id" value="<%= post._id %>">
                 <br>
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -68,7 +65,7 @@
                 </div>
     
                 <div class="form-group">
-                    <button type="button" id="post" class="btn text-light">Submit</button>
+                    <button type="submit" id="post" class="btn text-light">Submit</button>
                 </div>
             </form>
         </div>

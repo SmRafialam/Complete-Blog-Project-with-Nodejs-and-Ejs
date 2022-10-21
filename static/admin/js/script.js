@@ -1,5 +1,3 @@
-const { post } = require("../../../routes/router");
-
 (function($) {
 
 	"use strict";
@@ -16,26 +14,41 @@ const { post } = require("../../../routes/router");
 })(jQuery);
 
 tinymce.init({
-  selector: 'textarea#my-expressjs-tinymce-app',
-  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
-  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-  tinycomments_mode: 'embedded',
-  tinycomments_author: 'Author name',
-  mergetags_list: [
-    { value: 'First.Name', title: 'First Name' },
-    { value: 'Email', title: 'Email' },
-  ]
+  selector: 'textarea#myTextarea',
+  plugins: [
+    'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+    'table emoticons template paste help'
+  ],
+  toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+    'forecolor backcolor emoticons | help',
+  menu: {
+    favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+  },
+  menubar: 'favs file edit view insert format tools table help',
+  content_css: 'css/content.css',
+    setup: function (editor) {
+      editor.on('init', function (e) {
+        editor.setContent(localStorage.getItem("myContent"));
+      });
+    }
+  
 });
 
 
-function doComment(form){
-  $.ajax({
-    url: "/do-comment",
-    method: "post",
-    data: {name: form.name.value , email: form.email.value , comment:form.comment.value,
-          post_id: form.post_id.value},
-    success: function(response){
-      alert(response);
-    }      
-  })
-}
+
+// plugins: [
+//     'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+//     'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+//     'table emoticons template paste help'
+//   ],
+//   toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+//     'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+//     'forecolor backcolor emoticons | help',
+//   menu: {
+//     favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+//   },
+//   menubar: 'favs file edit view insert format tools table help',
+//   content_css: 'css/content.css'
+
