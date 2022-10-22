@@ -1,3 +1,5 @@
+const { post } = require("../../../routes/router");
+
 (function($) {
 
 	"use strict";
@@ -35,6 +37,7 @@ tinymce.init({
     }
   
 });
+
 
 
 

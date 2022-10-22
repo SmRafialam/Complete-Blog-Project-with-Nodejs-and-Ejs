@@ -177,7 +177,8 @@ router.get('/admin/addPostDetails',async(req,res)=>{
 router.get('/admin/postDetailsLists',async(req,res)=>{
     try{
         const postdetails = await PostDetails.find({});
-        res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, });
+        const postComments = await DoComments.find({});
+        res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, postComments:postComments});
     }
     catch(err){
         res.send("Something went wrong");
@@ -193,6 +194,16 @@ router.get('/postDetails',function(req,res){
 
         }
     });
+    DoComments.find().exec((err,postComments)=>{
+        if(err){
+            res.send("Something went wrong");
+        } else{
+            res.render("user/blogdetails", { postComments:postComments, });
+
+        }
+    });
+    
+
 });
 //edit post details route
 router.get('/update-postDetails/:id',function(req,res){
@@ -359,26 +370,31 @@ router.get('/delete-post/:id',(req,res)=>{
 
 //POST FOR COMMENT BOX
 
-// router.post('/do-comment',function(req,res){
-//     PostDetails.collection("postdetails").update({"_id": ObjectId(req.body.postDetails_id)},{
-//         $push: {
-//             "comments":{
-//                 name: req.body.name,
-//                 email: req.body.email,
-//                 comment: req.body.comment,
-//             }
-//         },function(error,post){
-//             res.send("comment successfull");
-//         }
-//     });
-// })
+router.post('/postdetails',function(req,res){
+    let id = req.body.id;
+        DoComments.findByIdAndUpdate(id,{
+        $push: {
+            "comments":{
+                name: req.body.name,
+                email: req.body.email,
+                comment: req.body.comment,
+            }
+        },function(error,postComments){
+            res.send("comment successfull");
+        }
+    });
+});
+//----------->
 router.post('/doComment',async(req,res)=>{
+    
     const doCommentdata = {
         name: req.body.name,
         email: req.body.email,
         comment: req.body.comment,
+        status: req.body.status,
     }
     console.log(doCommentdata);
+    
     const doComments = new DoComments(doCommentdata);
     doComments.save((err) => {
         console.log(err);
@@ -393,6 +409,7 @@ router.post('/doComment',async(req,res)=>{
             res.redirect('/admin/postDetailsLists');
         }
     });
+    
 });
 
 

@@ -11,6 +11,7 @@
 <div class="br-mainpanel">
     <div class="br-pagetitle">
     <div class="container-fluid p-5 d-flex justify-content-center">
+
         <form action="/postDetailsLists" method="post">
             <% if(postdetails != ''){ %>
 
@@ -51,12 +52,56 @@
                 <% } else { %>
                     <h1 class="text-cwntwr text-secondary my-5">No posts found in the database!</h1>
                 <% } %>
+                <br><br>
+                <h3>Comment Box :-</h3>
+                <form action="/postDetailsLists" method="post">
+                    <% if(postComments != ''){ %>
+                        <table id="table" class="text-center">
+                            <thead class="thead-dark bg-dark text-white">
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% postComments.forEach((comments,index)=>{ %>
+                                    <tr class="align-items-center">
+                                        <td><%= index %></td>
+                                        <td><%= comments.name %></td>
+                                        <td><%= comments.email %></td>
+                                        <td><%= comments.comment %></td>
+                                        <td><%= comments.status %></td>
+                                        <td>
+                                            <a href="/update-postDetails/<%=comments._id%>" class="btn border-shadow updatebtn">
+                                                <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
+                                            </a>
+                                            <a href="/delete-postDetails/<%=comments._id%>" class="btn border-shadow deletebtn" >
+                                                <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% }) %> 
+                            </tbody>
+                        </table>
+                        <% } else { %>
+                            <h1 class="text-cwntwr text-secondary my-5">No posts found in the database!</h1>
+                        <% } %>
+                    
+                </form>
             
         </form>
     </div>
+<!-- comment section end -->
 </div>
 </div>
 <!-- main body end-->
+
+
 
 
 <!-- footer -->
