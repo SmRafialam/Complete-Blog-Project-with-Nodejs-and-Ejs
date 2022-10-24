@@ -63,7 +63,6 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Comments</th>
-                                    <th>Status</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -75,13 +74,9 @@
                                         <td><%= comments.name %></td>
                                         <td><%= comments.email %></td>
                                         <td><%= comments.comment %></td>
-                                        <td><%= comments.status %></td>
                                         <td>
-                                            <a href="/update-postDetails/<%=comments._id%>" class="btn border-shadow updatebtn">
-                                                <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
-                                            </a>
-                                            <a href="/delete-postDetails/<%=comments._id%>" class="btn border-shadow deletebtn" >
-                                                <span class="text-gradient text-danger"><i class="fa-solid fa-trash"></i></span>
+                                            <a href="/view-comments/<%=comments._id%>" class="btn border-shadow updatebtn">
+                                                <span class="text-gradient text-info"><i class="fa-regular fa-eye"></i> View</span>
                                             </a>
                                         </td>
                                     </tr>

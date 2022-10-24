@@ -164,6 +164,23 @@ router.post('/addPostDetails',upload,async(req,res)=>{
         }
     });
 });
+
+//specific query for featured item property
+const getFeaturedItem = async()=>{
+    try{
+        const result = await Post.find({featuredItem: true});
+        console.log(result); 
+    }
+    catch(err){
+        console.log(err);
+    }
+    
+}
+getFeaturedItem();
+
+
+
+
 //add & show post details route
 router.get('/admin/addPostDetails',async(req,res)=>{
     try{
@@ -185,23 +202,16 @@ router.get('/admin/postDetailsLists',async(req,res)=>{
 
     }
 });
-router.get('/postDetails',function(req,res){
-    PostDetails.find().exec((err,postDetails)=>{
-        if(err){
-            res.send("Something went wrong");
-        } else{
-            res.render("user/blogdetails", { postDetails:postDetails, });
+router.get('/postDetails',async(req,res)=>{
+    try{
+        const postDetails = await PostDetails.find({});
+        const postComments = await DoComments.find({});
+        res.render("user/blogdetails", { postDetails:postDetails, postComments:postComments});
+    }
+    catch(err){
+        res.send("Something went wrong");
 
-        }
-    });
-    DoComments.find().exec((err,postComments)=>{
-        if(err){
-            res.send("Something went wrong");
-        } else{
-            res.render("user/blogdetails", { postComments:postComments, });
-
-        }
-    });
+    }
     
 
 });
@@ -370,8 +380,8 @@ router.get('/delete-post/:id',(req,res)=>{
 
 //POST FOR COMMENT BOX
 
-router.post('/postdetails',function(req,res){
-    let id = req.body.id;
+router.post('/postdetails/:id',function(req,res){
+    let id = req.params.id;
         DoComments.findByIdAndUpdate(id,{
         $push: {
             "comments":{
@@ -386,12 +396,11 @@ router.post('/postdetails',function(req,res){
 });
 //----------->
 router.post('/doComment',async(req,res)=>{
-    
+
     const doCommentdata = {
         name: req.body.name,
         email: req.body.email,
         comment: req.body.comment,
-        status: req.body.status,
     }
     console.log(doCommentdata);
     
@@ -406,7 +415,7 @@ router.post('/doComment',async(req,res)=>{
                 type: "success",
                 message: "post Comments added successfully",
             };
-            res.redirect('/admin/postDetailsLists');
+            res.redirect('/postdetails');
         }
     });
     

@@ -12,8 +12,6 @@ const doCommentschema = new mongoose.Schema({
         type: String,
         required: true,
     },
-   
-    status:String,
-    
+       
 });
 module.exports = mongoose.model("DoComments",doCommentschema);
