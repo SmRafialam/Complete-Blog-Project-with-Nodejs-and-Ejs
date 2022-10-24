@@ -63,6 +63,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Comments</th>
+                                    <th>Status</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -74,6 +75,14 @@
                                         <td><%= comments.name %></td>
                                         <td><%= comments.email %></td>
                                         <td><%= comments.comment %></td>
+                                        <td>
+                                            <% comments.viewComments(cmnt,index)=>{ %>
+
+                                            <%= cmnt.status==true?'checked':'' %>
+                                            <%= cmnt.status==false?'checked':'' %>
+
+                                            <% } %> 
+                                        </td>
                                         <td>
                                             <a href="/view-comments/<%=comments._id%>" class="btn border-shadow updatebtn">
                                                 <span class="text-gradient text-info"><i class="fa-regular fa-eye"></i> View</span>

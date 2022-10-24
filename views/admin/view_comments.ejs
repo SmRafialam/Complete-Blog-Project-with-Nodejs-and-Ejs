@@ -1,0 +1,51 @@
+<%- include("header") %>
+
+<body>
+
+  <%- include("leftbar") %>
+
+
+  <%- include("navbar") %>
+
+
+<div class="br-mainpanel">
+    <div class="br-pagetitle">
+        <div class="container-fluid p-5">
+            <h2 class="text-center">View Comments</h2>
+            <form method="post" action="/view_comments/<%= viewComments._id %>" id="view_comments" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="hidden" name="id" value="<%= viewComments._id %>">
+                    <input name="name" class="form-control" placeholder="Enter name" value="<%= viewComments.name %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="abc@gmail.com" value="<%= viewComments.email %>" required> 
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comments</label>
+                    <input type="textarea" name="comment" class="form-control" placeholder="Enter Your Response" value="<%= viewComments.comment %>" required>
+                </div>
+                                
+                <div class="form-group py-2">
+                    <label for="status" class="text-light">Status: </label>
+                    <div class="radio form-check form-check-inline">
+                        <input type="radio" id="radio4" name="status" value=true>
+                        <label for="radio4" >Approved</label>
+                    </div>
+                    <div class="radio form-check form-check-inline">
+                        <input type="radio" id="radio5" name="status" value=false>
+                        <label for="radio5">Pending</label>
+                    </div>
+                </div>
+                <div class="form-group py-2">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>   
+            </form>   
+        </div>
+    </div>
+</div>
+
+
+<%- include("footer") %>

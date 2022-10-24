@@ -194,7 +194,8 @@ router.get('/admin/addPostDetails',async(req,res)=>{
 router.get('/admin/postDetailsLists',async(req,res)=>{
     try{
         const postdetails = await PostDetails.find({});
-        const postComments = await DoComments.find({});
+        const postComments = await DoComments.find({
+        });
         res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, postComments:postComments});
     }
     catch(err){
@@ -379,21 +380,20 @@ router.get('/delete-post/:id',(req,res)=>{
 })
 
 //POST FOR COMMENT BOX
-
-router.post('/postdetails/:id',function(req,res){
-    let id = req.params.id;
-        DoComments.findByIdAndUpdate(id,{
-        $push: {
-            "comments":{
-                name: req.body.name,
-                email: req.body.email,
-                comment: req.body.comment,
-            }
-        },function(error,postComments){
-            res.send("comment successfull");
-        }
-    });
-});
+// router.post('/postdetails',function(req,res){
+//         DoComments.findByIdAndUpdate({
+//         $push: {
+//             "comments":{
+//                 name: req.body.name,
+//                 email: req.body.email,
+//                 comment: req.body.comment,
+//                 status: req.body.status,
+//             }
+//         },function(error,postComments){
+//             res.send("comment successfull");
+//         }
+//     });
+// });
 //----------->
 router.post('/doComment',async(req,res)=>{
 
@@ -401,6 +401,8 @@ router.post('/doComment',async(req,res)=>{
         name: req.body.name,
         email: req.body.email,
         comment: req.body.comment,
+        status: req.body.status,
+
     }
     console.log(doCommentdata);
     
@@ -420,7 +422,44 @@ router.post('/doComment',async(req,res)=>{
     });
     
 });
+//edit an view comments route
+router.get('/view-comments/:id',function(req,res){
+    let id = req.params.id;
+    DoComments.findById(id, (err,viewComments)=>{
+        if(err){
+            res.redirect("/admin/postDetailsLists");
+        }else{
+                res.render("admin/view_comments",{
+                    title: "View Comments",
+                    viewComments:viewComments,
 
+                })
+            }
+        
+    })
+});
+//update an view comments route
+router.post('/view_comments/:id',function(req,res){
+    let id = req.params.id;
+    DoComments.findByIdAndUpdate(id, {
+        name: req.body.name,
+        email: req.body.email,
+        comment: req.body.comment,
+        status: req.body.status,
+    },
+    (err,result)=>{
+        if(err){
+            res.json({message: err.message, type: 'danger'});
+
+        }else{
+            req.message={
+                type: "success",
+                message: "Comments added successfully",
+            };
+            res.redirect('/admin/postDetailsLists');
+        }
+    });
+});
 
 
 
