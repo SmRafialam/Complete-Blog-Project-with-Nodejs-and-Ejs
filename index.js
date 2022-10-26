@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const fs = require('fs');
@@ -13,8 +14,8 @@ const PORT = process.env.PORT ||4000;
 connectDB();
 
 //middleware
-app.use(express.urlencoded({extended:false}));
-app.use(express.json());
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 app.use(
     session({
         secret: "my secret key",

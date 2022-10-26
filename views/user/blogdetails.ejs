@@ -120,7 +120,7 @@
                 </div>
               </form>
 
-              <form class="full-form" method="POST" action="/doComment">
+              <form class="full-form" method="POST" action="/doComment" id="commentForm">
                 <h6>Write your response</h6>
                 <p>
                   Your email address will not be published. Required fields are
@@ -149,6 +149,10 @@
                     class="form-control sk-form-control comments-textarea"
                     placeholder="Your response"
                   ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <div class="g-recaptcha" data-sitekey="6LeODrQiAAAAAC5WeWXfEkdBmavTDB55-vzzrxBr"></div>
                 </div>
                
                 <button type="submit" class="button button-primary button-fullwidth blogdetails-btn">

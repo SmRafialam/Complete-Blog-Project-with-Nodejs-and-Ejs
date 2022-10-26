@@ -97,18 +97,5 @@ $('.sk-main__banner-slider').slick({
 });
 
 
-// function doComment(form){
-//   $.ajax({
-//     url: "/postdetails",
-//     method: "POST",
-//     data: {name: form.name.value, email: form.email.value, comment:form.comment.value,
-//       postComments_id: form.postComments_id.value},
-//       success: function(response){
-//         alert(response);
-//       }
-//   });
-//   return false;
-// }
 
-
-
+document.getElementById()
