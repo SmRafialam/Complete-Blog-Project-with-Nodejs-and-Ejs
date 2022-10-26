@@ -24,8 +24,7 @@ var upload = multer({
 
 //insert an post into database route
 router.post('/addposts',upload,async(req,res)=>{
-    var myContent = tinymce.get("myTextarea").getContent();
-    localStorage.setItem("myContent", myContent);
+    
 
     const postdata = {
         title: req.body.title,
@@ -206,7 +205,9 @@ router.get('/admin/postDetailsLists',async(req,res)=>{
 router.get('/postDetails',async(req,res)=>{
     try{
         const postDetails = await PostDetails.find({});
-        const postComments = await DoComments.find({});
+        const postComments = await DoComments.find({
+            status: 'Approved',
+        });
         res.render("user/blogdetails", { postDetails:postDetails, postComments:postComments});
     }
     catch(err){
@@ -380,22 +381,8 @@ router.get('/delete-post/:id',(req,res)=>{
 })
 
 //POST FOR COMMENT BOX
-// router.post('/postdetails',function(req,res){
-//         DoComments.findByIdAndUpdate({
-//         $push: {
-//             "comments":{
-//                 name: req.body.name,
-//                 email: req.body.email,
-//                 comment: req.body.comment,
-//                 status: req.body.status,
-//             }
-//         },function(error,postComments){
-//             res.send("comment successfull");
-//         }
-//     });
-// });
 //----------->
-router.post('/doComment',async(req,res)=>{
+router.post('/doComment',upload,async(req,res)=>{
 
     const doCommentdata = {
         name: req.body.name,
@@ -422,6 +409,25 @@ router.post('/doComment',async(req,res)=>{
     });
     
 });
+
+
+// router.get('/doComment/:id',async(req,res)=>{
+//     let id = req.params.id;
+//     Post.findById(id,{
+//         status: 'Approved'
+//     }).exec((err,posts)=>{
+    
+//     posts=posts.reverse();
+//         if(err){
+//             res.send("Something went wrong");
+//         }else{
+//                 res.render("/postdetails");
+//             }
+//         });
+ 
+   
+// });
+
 //edit an view comments route
 router.get('/view-comments/:id',function(req,res){
     let id = req.params.id;
@@ -432,14 +438,13 @@ router.get('/view-comments/:id',function(req,res){
                 res.render("admin/view_comments",{
                     title: "View Comments",
                     viewComments:viewComments,
-
                 })
             }
         
     })
 });
 //update an view comments route
-router.post('/view_comments/:id',function(req,res){
+router.post('/view_comments/:id',upload,function(req,res){
     let id = req.params.id;
     DoComments.findByIdAndUpdate(id, {
         name: req.body.name,

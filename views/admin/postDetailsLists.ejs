@@ -36,7 +36,9 @@
                                 <td><%= post.shortDescription %></td>
                             
                                 <td> <img src="../../static/uploads/<%=post.image %>" width="50px" class="img-thumbnail"> </td>
+
                                 <td><%= post.status %></td>
+
                                 <td>
                                     <a href="/update-postDetails/<%=post._id%>" class="btn border-shadow updatebtn">
                                         <span class="text-gradient text-info"><i class="fa-solid fa-pen-to-square"></i></span>
@@ -76,12 +78,7 @@
                                         <td><%= comments.email %></td>
                                         <td><%= comments.comment %></td>
                                         <td>
-                                            <% comments.viewComments(cmnt,index)=>{ %>
-
-                                            <%= cmnt.status==true?'checked':'' %>
-                                            <%= cmnt.status==false?'checked':'' %>
-
-                                            <% } %> 
+                                            <%= comments.status %>
                                         </td>
                                         <td>
                                             <a href="/view-comments/<%=comments._id%>" class="btn border-shadow updatebtn">

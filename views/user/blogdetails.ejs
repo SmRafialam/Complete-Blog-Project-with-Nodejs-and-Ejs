@@ -5,13 +5,13 @@
     <section class="blog-details">
       <article class="container">
         <figure class="row">
+          <% postDetails.forEach(function(postdetails){ %>
+
           <div class="col-sm-12">
             <div class="blog-details-heading">
-              <h2>Chocolate-Covered Cherry Frappeketo™</h2>
+              <h2><%= postdetails.title %></h2>
               <p>
-                Today is the day for love and chocolate, and we’re showing it
-                with Pure Therapeutic Ketones® in our Chocolate Covered Cherry
-                Frappeketo™! Whip one of these up and share it with your love.
+                <%= postdetails.content %>
               </p>
             </div>
 
@@ -22,7 +22,7 @@
               </div>
 
               <img
-                src="../../static/user/images/inner-img.png"
+                src="../../static/uploads/<%= postdetails.image %>"
                 alt=""
                 class="img-fluid blog-details-inner-img"
               />
@@ -42,24 +42,8 @@
             </div>
 
             <div class="blog-details-instructions">
-              <h3>Instructions</h3>
-              <ul>
-                <li>
-                  Place KETO//OS® Unleashed Eclipse, KETO//OS® NAT™ Swiss Cacao,
-                  almond milk, ice, and chocolate syrup in blender and pulse
-                  until smooth.
-                </li>
-                <li>
-                  Top with maraschino cherry and dark chocolate shavings. Enjoy!
-                </li>
-              </ul>
+              <%= postdetails.shortDescription %>
 
-              <p class="blog-details-instructions-details">
-                How do you get your chocolate covered fruit fix? Email us your
-                recipe to YUM@pruvithq.com and we’ll feature it on our blog!
-                Share a picture of your final Frappeketo™ and tag us @justpruvit
-                #ketocooking so we can see!
-              </p>
             </div>
 
             <div class="blog-details-category">
@@ -104,6 +88,8 @@
               <button  class="button button-primary blog-shop"> Shop </button>
             </div>
           </div>
+          <% }) %>
+
         </figure>
       </article>
     </section>
@@ -165,7 +151,7 @@
                   ></textarea>
                 </div>
                
-                <button type="submit" class="button button-primary button-fullwidth">
+                <button type="submit" class="button button-primary button-fullwidth blogdetails-btn">
                   Submit
                 </button>
               </form>
@@ -199,6 +185,7 @@
     </section>
     <!-- END of comments -->
 
+    
    
     
       

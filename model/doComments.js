@@ -14,7 +14,8 @@ const doCommentschema = new mongoose.Schema({
     },
    
     status: {
-        type: Boolean,
+        type: String,
+        default: 'Pending',
     }
     
 });
