@@ -6,6 +6,7 @@ const DoComments = require('../model/doComments');
 const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
+const request = require('request');
 
 //image upload
 var storage  = multer.diskStorage({
@@ -384,6 +385,7 @@ router.get('/delete-post/:id',(req,res)=>{
 //----------->
 router.post('/doComment',upload,async(req,res)=>{
 
+    
     const doCommentdata = {
         name: req.body.name,
         email: req.body.email,
@@ -392,45 +394,20 @@ router.post('/doComment',upload,async(req,res)=>{
 
     }
     console.log(doCommentdata);
-    if(
-        req.body.captcha === undefined ||
-        req.body.captcha === '' ||
-        req.body.captcha === null
+    try{
+        const doComments = new DoComments(doCommentdata);
 
-    ){
-        return res.json({"success":false,"msg":"please select captcha"});
+        await doComments.save();
+        req.message={
+            type: "success",
+            message: "post Comments added successfully",
+        };
+        res.redirect('/postdetails');
     }
-    //secret key
-    const secretKey = '6LeODrQiAAAAAJjJmF8tmqQZmRCZhGIvAL60OAP6';
-
-    //verify URL
-    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
-    //Make Request To verify URL
-    request(verifyUrl,(err,response,body)=>{
-    body = JSON.parse(body);
-
-    //if not successful
-    if(body.success !== undefined && !body.success){
-        return res.json({"success":false,"msg":"Failed captcha Verification"});
+    catch(err){
+        res.json({message: err.message, type: 'danger'});
     }
-    //if successful
-    return res.json({"success":true,"msg":"captcha passed"});
-
-}) 
-    const doComments = new DoComments(doCommentdata);
-    doComments.save((err) => {
-        console.log(err);
-        if(err){
-            res.json({message: err.message, type: 'danger'});
-
-        }else{
-            req.message={
-                type: "success",
-                message: "post Comments added successfully",
-            };
-            res.redirect('/postdetails');
-        }
-    });
+    
     
 });
 
@@ -491,36 +468,50 @@ router.post('/view_comments/:id',upload,function(req,res){
 });
 
 //post captcha form
-// router.post('/subscribe',(req,res)=>{
-//     if(
-//         req.body.captcha === undefined ||
-//         req.body.captcha === '' ||
-//         req.body.captcha === null
+router.post('/subscribe',(req,res)=>{
+    if(
+        req.body.captcha === undefined ||
+        req.body.captcha === '' ||
+        req.body.captcha === null
 
-//     ){
-//         return res.json({"success":false,"msg":"please select captcha"});
-//     }
+    ){
+        return res.json({"success":false,"msg":"please select captcha"});
+    }
 
-//     //secret key
-//     const secretKey = '6LeODrQiAAAAAJjJmF8tmqQZmRCZhGIvAL60OAP6';
+    //secret key
+    const secretKey = '6LeODrQiAAAAAJjJmF8tmqQZmRCZhGIvAL60OAP6';
 
-//     //verify URL
-//     const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+    //verify URL
+    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
 
-//     //Make Request To verify URL
-//     request(verifyUrl,(err,response,body)=>{
-//         body = JSON.parse(body);
+    //Make Request To verify URL
+    request(verifyUrl,(err,response,body)=>{
+        body = JSON.parse(body);
+        console.log(body);
+        
+        //if not successful
+        if(body.success !== undefined && !body.success){
+            return res.json({"success":false,"msg":"Failed captcha Verification"});
+        }
+        //if successful
+        
+        if(body.success == true){
+            const doCommentdata = {
+                name: req.body.name,
+                email: req.body.email,
+                comment: req.body.comment,
+                status: req.body.status,
+        
+            }
+        const doComments = new DoComments(doCommentdata);
 
-//         //if not successful
-//         if(body.success !== undefined && !body.success){
-//             return res.json({"success":false,"msg":"Failed captcha Verification"});
-//         }
-//         //if successful
-//         return res.json({"success":true,"msg":"captcha passed"});
+        doComments.save();
+        return res.json({"success":true,"msg":"captcha passed"});
 
-//     }) 
+        }
+    }) 
 
-// });
+});
 
 
 

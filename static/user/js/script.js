@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
 
@@ -98,4 +97,27 @@ $('.sk-main__banner-slider').slick({
 
 
 
-document.getElementById()
+document.getElementById('commentForm').addEventListener('submit',submitForm);
+function submitForm(e){
+  e.preventDefault();
+
+  const name = document.querySelector('#name').value;
+  const email = document.querySelector('#email').value;
+  const comment = document.querySelector('#comment').value;
+  const captcha = document.querySelector('#g-recaptcha-response').value;
+
+  fetch('/subscribe', {
+    method: 'POST',
+    headers: {
+      'Accept' : 'application/json, text/plain, */*',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({name:name , email:email, comment:comment, captcha:captcha})
+  })
+  .then((res)=>res.json())
+  .then((data)=>{
+    console.log(data);
+    alert(data.msg);
+  });
+
+}
