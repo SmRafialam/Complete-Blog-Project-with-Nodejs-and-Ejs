@@ -18,6 +18,8 @@
                     <label for="name">Name</label>
                     <input type="hidden" name="id" value="<%= viewComments._id %>">
                     <input name="name" class="form-control" placeholder="Enter name" value="<%= viewComments.name %>" required>
+                    <input name="comment_email" type="hidden" value="<%= viewComments.email %>" required>
+
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>

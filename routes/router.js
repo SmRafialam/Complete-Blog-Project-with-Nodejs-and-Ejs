@@ -7,6 +7,7 @@ const Category = require('../model/category');
 const multer = require('multer');
 const fs = require('fs');
 const request = require('request');
+const nodemailer = require('nodemailer');
 
 //image upload
 var storage  = multer.diskStorage({
@@ -447,23 +448,40 @@ router.get('/view-comments/:id',function(req,res){
 //update an view comments route
 router.post('/view_comments/:id',upload,function(req,res){
     let id = req.params.id;
-    DoComments.findByIdAndUpdate(id, {
+    DoComments.findByIdAndUpdate(id,{
         name: req.body.name,
         email: req.body.email,
         comment: req.body.comment,
-        status: req.body.status,
+        status: req.body.status, 
+        comment_email: req.body.comment_email,
     },
-    (err,result)=>{
-        if(err){
+    (err,result,document)=>{
+        var transporter = nodemailer.createTransport({
+            "server" : "gmail",
+            "auth":{
+                "user": "",
+                "pass": "",
+            }
+        });
+        var mailOptions = {
+            "from": "My Blog",
+            "to": req.body.comment_email,
+            "subject": "New reply",
+            "text": req.body.name + "User has replied on your comment.http://localhost:8000/view-comments/" + req.params.id,
+        };
+        transporter.sendMail(mailOptions,function(req,info){
+            if(err){
             res.json({message: err.message, type: 'danger'});
 
-        }else{
-            req.message={
-                type: "success",
-                message: "Comments added successfully",
-            };
-            res.redirect('/admin/postDetailsLists');
-        }
+            }else{
+                req.message={
+                    type: "success",
+                    message: "Comments added successfully",
+                };
+                res.redirect('/admin/postDetailsLists');
+            }
+            })
+        
     });
 });
 
