@@ -114,7 +114,15 @@ router.get('/',function(req,res){
 });
 
 router.get('/admin/dashboard',function(req,res){
-    res.render("admin/dashboard");
+    if(res.session.admin){
+        res.render("admin/dashboard");
+    }else{
+        res.redirect("/admin");
+    }
+});
+
+router.get("/admin",function(req,res){
+    res.render("admin/login")
 });
 
 router.get('/admin/addposts',async(req,res)=>{
@@ -455,21 +463,25 @@ router.post('/view_comments/:id',upload,function(req,res){
         status: req.body.status, 
         comment_email: req.body.comment_email,
     },
-    (err,result,document)=>{
-        var transporter = nodemailer.createTransport({
-            "server" : "gmail",
-            "auth":{
-                "user": "",
-                "pass": "",
+    async(err,result,document)=>{
+        let testAccount = await nodemailer.createTestAccount();
+        let transporter = nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            secure: false,
+            server : "gmail",
+            auth:{
+                "user": testAccount.user,
+                "pass": testAccount.pass,
             }
         });
-        var mailOptions = {
+        let mailOptions = {
             "from": "My Blog",
             "to": req.body.comment_email,
             "subject": "New reply",
             "text": req.body.name + "User has replied on your comment.http://localhost:8000/view-comments/" + req.params.id,
         };
-        transporter.sendMail(mailOptions,function(req,info){
+        let info = transporter.sendMail(mailOptions,function(req,info){
             if(err){
             res.json({message: err.message, type: 'danger'});
 
@@ -480,7 +492,8 @@ router.post('/view_comments/:id',upload,function(req,res){
                 };
                 res.redirect('/admin/postDetailsLists');
             }
-            })
+            });
+            console.log("Message sent: %s", info);
         
     });
 });
