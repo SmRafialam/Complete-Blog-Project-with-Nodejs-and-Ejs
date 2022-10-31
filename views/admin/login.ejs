@@ -21,7 +21,7 @@
             <div class="form-sub-main">
               <div class="_main_head_as">
                 <a href="#">
-                  <img src="assets/images/vector.png">
+                  <img src="../../static/admin/assets/images/vector.png">
                 </a>
               </div>
               <div class="form-group">
@@ -55,9 +55,25 @@
 
     <script>
       function doLogin(form){
+
+        $.ajax({
+          url: "/do-admin-login",
+          method: "POST",
+          data: {email:form.email.value, password:form.password.value},
+          success: function(res){
+            if(res == ""){
+              alert("Wrong credentials");
+            }else{
+              alert("Succesfully logged in");
+              window.location.href = "/admin/dashboard";
+            }
+          }
+        });
+
         return false;
       }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   </body>
 </html>
 

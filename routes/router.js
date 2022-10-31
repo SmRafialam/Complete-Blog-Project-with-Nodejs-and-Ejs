@@ -4,10 +4,20 @@ const Post = require('../model/model');
 const PostDetails = require('../model/postdetails');
 const DoComments = require('../model/doComments');
 const Category = require('../model/category');
+const Admins = require('../model/admin');
 const multer = require('multer');
 const fs = require('fs');
 const request = require('request');
 const nodemailer = require('nodemailer');
+const session = require('express-session');
+
+router.use(
+    session({
+        key: "admin",
+        secret: "any random string",
+        
+    })
+);
 
 //image upload
 var storage  = multer.diskStorage({
@@ -22,6 +32,43 @@ var upload = multer({
     storage:storage,
 }).single("image");
 
+
+
+//admin panel---->
+
+router.post('/do-admin-login',upload,async(req,res)=>{
+
+    
+    const doAdminLogin = {
+        email: req.body.email,
+        password: req.body.password,
+
+    }
+    console.log(doAdminLogin);
+    try{
+        const doLogin = new Admins(doAdminLogin);
+
+        await doLogin.findOne({
+            email: req.body.email,
+            password: req.body.password,
+        },function(err,admin){
+            if(admin != ""){
+                req.session.admin = admin;
+            }
+            res.send(admin);
+        });
+    }
+    catch(err){
+        res.json({message: err.message, type: 'danger'});
+    }
+    
+    
+});
+
+router.get("/do-logout",function(req,res){
+    req.session.destroy();
+    res.redirect("/admin");
+})
 
 
 //insert an post into database route
@@ -81,6 +128,7 @@ router.post('/addposts',upload,async(req,res)=>{
 router.get('/posts',function(req,res){
     res.send("All posts");
 });
+
 router.get('/categories',function(req,res){
     res.send("All Categories");
 });
@@ -114,11 +162,11 @@ router.get('/',function(req,res){
 });
 
 router.get('/admin/dashboard',function(req,res){
-    if(res.session.admin){
+    // if(req.session.admin){
         res.render("admin/dashboard");
-    }else{
-        res.redirect("/admin");
-    }
+    // }else{
+    //     res.redirect("/admin");
+    // }
 });
 
 router.get("/admin",function(req,res){
@@ -584,7 +632,7 @@ router.post('/addcategory',upload, async(req,res)=>{
     const category = new Category(categorydata);
     try{
         const cat = await category.save();
-        await post.updateOne({
+        await Post.updateOne({
             _id : req.postId
         },{
             $push:{

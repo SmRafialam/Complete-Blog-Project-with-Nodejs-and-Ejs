@@ -32,7 +32,7 @@ body {
 .br-header-right .dropdown > a {
   color: rgba(255, 255, 255, 0.8); }
   .br-header-right .dropdown > a:hover, .br-header-right .dropdown > a:focus {
-    color: #fff; }
+    color: rgb(255, 255, 255); }
 
 .br-header-right .dropdown .dropdown-menu::before {
   display: none; }
