@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const AdminSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -11,4 +11,4 @@ const AdminSchema = new mongoose.Schema({
     
     
 });
-module.exports = mongoose.model("Admins",AdminSchema);
+module.exports = mongoose.model("Users",UserSchema);
