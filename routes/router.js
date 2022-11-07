@@ -4,7 +4,7 @@ const Post = require('../model/model');
 const PostDetails = require('../model/postdetails');
 const DoComments = require('../model/doComments');
 const Category = require('../model/category');
-const Users = require('../model/user');
+const UserReg = require('../model/userReg');
 const multer = require('multer');
 const fs = require('fs');
 const request = require('request');
@@ -29,51 +29,52 @@ var upload = multer({
 
 //admin panel---->
 
-router.post('/do-admin-login',async(req,res)=>{
+// router.post('/do-admin-login',async(req,res)=>{
 
     
-    const doAdminLogin = {
-        email: req.body.email,
-        password: req.body.password,
+//     const doAdminLogin = {
+//         email: req.body.email,
+//         password: req.body.password,
 
-    }
-    console.log(doAdminLogin);
-    try{
-        const doLogin = new Admins(doAdminLogin);
+//     }
+//     console.log(doAdminLogin);
+//     try{
+//         const doLogin = new Admins(doAdminLogin);
 
-    const userData = await doLogin.findOne({
-            email:email,
-            password:password,
+//     const userData = await doLogin.findOne({
+//             email:email,
+//             password:password,
         // },function(err,admin){
         //     if(admin != ""){
         //         req.session.admin = admin;
         //     }
         //     res.send(admin);
-        });
-        if(userData){
-            const passwordMatch = await bcrypt.compare(password,userData,password);
-            if(passwordMatch){
-               if(userData == ""){
-                res.render('admin/login',{message: "email and password is incorrect"});
+//         });
+//         if(userData){
+//             const passwordMatch = await bcrypt.compare(password,userData,password);
+//             if(passwordMatch){
+//                if(userData == ""){
+//                 res.render('admin/login',{message: "email and password is incorrect"});
 
-            }else{
-                req.session.user_id = userData._id;
-                res.redirect('/admin/dashboard');
-            } 
-            }
+//             }else{
+//                 req.session.user_id = userData._id;
+//                 res.redirect('/admin/dashboard');
+//             } 
+//             }
             
 
 
-        }else{
-            res.render('admin/login',{message: "email and password is incorrect"});
-        }
-    }
-    catch(err){
-        res.json({message: err.message, type: 'danger'});
-    }
+//         }else{
+//             res.render('admin/login',{message: "email and password is incorrect"});
+//         }
+//     }
+//     catch(err){
+//         res.json({message: err.message, type: 'danger'});
+//     }            password:hashedPass
+
     
     
-});
+// });
 
 // router.post('/do-admin-login',upload,async(req,res)=>{
 //     const doAdminLogin = {
@@ -103,6 +104,36 @@ router.get("/do-logout",function(req,res){
     res.redirect("/admin");
 })
 
+//Registration Panel---->
+
+
+router.post("/register",async(res,req)=>{
+    try{
+        const Password = req.body.RegPassword;
+        const RepeatPassword = req.body.repeatRegPassword;
+
+        if(Password === RepeatPassword){
+            const userRegister = new UserReg({
+                name:req.body.name,
+                email:req.body.email,
+                phone:req.body.phone,
+                RegPassword:req.body.RegPassword,
+                repeatRegPassword:req.body.repeatRegPassword,
+
+            })
+            const registered = await userRegister.save();
+            console.log(registered);
+            res.render('/admin/login');
+
+        }else{
+            res.send("Password are not matching");
+        }
+    }
+    catch(err){
+        console.log(err);
+        
+    }
+})
 
 //insert an post into database route
 router.post('/addposts',upload,async(req,res)=>{
