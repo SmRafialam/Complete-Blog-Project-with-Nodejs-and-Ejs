@@ -9,6 +9,19 @@ const multer = require('multer');
 const fs = require('fs');
 const request = require('request');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
+
+
+//Demo Secure Password using BcryptJS-->
+// const securePassword = async(password)=>{
+//     const passwordHash = await bcrypt.hash(password,10);
+//     console.log(passwordHash);
+
+//     const passwordMatch = await bcrypt.compare(password,passwordHash);
+//     console.log(passwordMatch);
+// }
+
+// securePassword("rafi@123");
 
 
 
@@ -28,53 +41,32 @@ var upload = multer({
 
 
 //admin panel---->
+//login-check
+router.post('/do-admin-login',async(req,res)=>{
 
-// router.post('/do-admin-login',async(req,res)=>{
 
-    
-//     const doAdminLogin = {
-//         email: req.body.email,
-//         password: req.body.password,
+    const email = req.body.email;
+    const RegPassword= req.body.RegPassword;
 
-//     }
-//     console.log(doAdminLogin);
-//     try{
-//         const doLogin = new Admins(doAdminLogin);
+    try{
 
-//     const userData = await doLogin.findOne({
-//             email:email,
-//             password:password,
-        // },function(err,admin){
-        //     if(admin != ""){
-        //         req.session.admin = admin;
-        //     }
-        //     res.send(admin);
-//         });
-//         if(userData){
-//             const passwordMatch = await bcrypt.compare(password,userData,password);
-//             if(passwordMatch){
-//                if(userData == ""){
-//                 res.render('admin/login',{message: "email and password is incorrect"});
-
-//             }else{
-//                 req.session.user_id = userData._id;
-//                 res.redirect('/admin/dashboard');
-//             } 
-//             }
+        const userData = await UserReg.findOne({
+            email:email,
+        });
+        if(userData.RegPassword === RegPassword ){
             
+            res.redirect('/admin/dashboard');
 
 
-//         }else{
-//             res.render('admin/login',{message: "email and password is incorrect"});
-//         }
-//     }
-//     catch(err){
-//         res.json({message: err.message, type: 'danger'});
-//     }            password:hashedPass
-
-    
-    
-// });
+        }
+        else{
+            res.render('admin/login',{message: "email and password is incorrect"});
+        }
+    }
+    catch(err){
+        res.send("Invalid login details");
+    }            
+});
 
 // router.post('/do-admin-login',upload,async(req,res)=>{
 //     const doAdminLogin = {
@@ -106,34 +98,37 @@ router.get("/do-logout",function(req,res){
 
 //Registration Panel---->
 
+router.post('/register',upload,async(req,res)=>{
+    const Password = req.body.RegPassword;
+    const RepeatPassword = req.body.repeatRegPassword;
 
-router.post("/register",async(res,req)=>{
-    try{
-        const Password = req.body.RegPassword;
-        const RepeatPassword = req.body.repeatRegPassword;
-
-        if(Password === RepeatPassword){
-            const userRegister = new UserReg({
-                name:req.body.name,
-                email:req.body.email,
-                phone:req.body.phone,
-                RegPassword:req.body.RegPassword,
-                repeatRegPassword:req.body.repeatRegPassword,
-
-            })
-            const registered = await userRegister.save();
-            console.log(registered);
-            res.render('/admin/login');
+  if(Password === RepeatPassword){
+    const userRegister = {
+        name:req.body.name,
+        email:req.body.email,
+        phone:req.body.phone,
+        RegPassword:req.body.RegPassword,
+        repeatRegPassword:req.body.repeatRegPassword,
+    }
+    
+    const registered = new UserReg(userRegister);
+    registered.save((err) => {
+        console.log(err);
+        if(err){
+            res.json({message: err.message, type: 'danger'});
 
         }else{
-            res.send("Password are not matching");
+            req.message={
+                type: "success",
+                message: "User added successfully",
+            };
+            res.redirect('/admin');
         }
-    }
-    catch(err){
-        console.log(err);
-        
-    }
-})
+    });
+}else{
+    res.send("password not matching");
+}
+});
 
 //insert an post into database route
 router.post('/addposts',upload,async(req,res)=>{
