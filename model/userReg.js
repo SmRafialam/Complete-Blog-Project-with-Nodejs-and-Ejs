@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -24,16 +25,34 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    
+    tokens: [{
+        token: {
+            type: String,
+            required: true,
+        }
+    }]
     
 });
 
+//generating tokens
+UserSchema.methods.generateAuthToken = async function(){
+    try{
+        const token = await jwt.sign({_id: this._id.toString()},"mynameissmrafialam");
+        this.tokens = this.tokens.concat({token:token})
+        await this.save();
+        return token;
+    }catch(error){
+        res.send("The error part" + error);
+        console.log("The error part" + error);
+    }
+}
+
+
+//converting password into bcrypt hash--->
 UserSchema.pre("save",async function(next){
     if(this.isModified("RegPassword")){
         this.RegPassword = await bcrypt.hash(this.RegPassword, 10);
-        console.log(`The current password is ${this.RegPassword}`);
-
-        this.repeatRegPassword = undefined;
+        this.repeatRegPassword = await bcrypt.hash(this.RegPassword, 10);
     }
     next();
 

@@ -10,7 +10,7 @@ const fs = require('fs');
 const request = require('request');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcryptjs');
-
+const jwt = require('jsonwebtoken');
 
 //Demo Secure Password using BcryptJS-->
 // const securePassword = async(password)=>{
@@ -23,6 +23,15 @@ const bcrypt = require('bcryptjs');
 
 // securePassword("rafi@123");
 
+//Demo JWT Token--->
+// const createToken = async() =>{
+//     const token = await jwt.sign({_id:"636a33f3f3a4b4e259483318"},"mynameissmrafialam",{expiresIn:"2 seconds"});
+//     console.log(token);
+//     const userVer = await jwt.verify(token,"mynameissmrafialam");
+//     console.log(userVer);
+
+// }
+// createToken();
 
 
 //image upload
@@ -57,7 +66,7 @@ router.post('/do-admin-login',async(req,res)=>{
         console.log(isMatch);
         if(isMatch){
             
-            res.redirect('/admin/dashboard');
+            res.render('admin/dashboard');
 
 
         }
@@ -112,8 +121,11 @@ router.post('/register',upload,async(req,res)=>{
         RegPassword:req.body.RegPassword,
         repeatRegPassword:req.body.repeatRegPassword,
     }
-
     const registered = new UserReg(userRegister);
+
+    const token = await registered.generateAuthToken();
+    console.log("The token part " + token);
+
     registered.save((err) => {
         console.log(err);
         if(err){
@@ -127,6 +139,8 @@ router.post('/register',upload,async(req,res)=>{
             res.redirect('/admin');
         }
     });
+    console.log("The registered part " + registered);
+
 }else{
     res.send("password not matching");
 }
@@ -222,13 +236,11 @@ router.get('/',function(req,res){
     
 });
 
-router.get('/admin/dashboard',function(req,res){
-    // if(req.session.user_id){
-        res.render("admin/dashboard");
-    // }else{
-    //     res.redirect("/admin");
-    // }
-});
+// router.get('/admin/dashboard',function(req,res){
+
+//    res.render("admin/dashboard");
+    
+// });
 
 router.get("/admin",function(req,res){
     res.render("admin/login")
