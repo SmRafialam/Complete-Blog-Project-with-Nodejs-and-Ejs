@@ -53,7 +53,9 @@ router.post('/do-admin-login',async(req,res)=>{
         const userData = await UserReg.findOne({
             email:email,
         });
-        if(userData.RegPassword === RegPassword ){
+        const isMatch = await bcrypt.compare(RegPassword, userData.RegPassword);
+        console.log(isMatch);
+        if(isMatch){
             
             res.redirect('/admin/dashboard');
 
@@ -110,7 +112,7 @@ router.post('/register',upload,async(req,res)=>{
         RegPassword:req.body.RegPassword,
         repeatRegPassword:req.body.repeatRegPassword,
     }
-    
+
     const registered = new UserReg(userRegister);
     registered.save((err) => {
         console.log(err);

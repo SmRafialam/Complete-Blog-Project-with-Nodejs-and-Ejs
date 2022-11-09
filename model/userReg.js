@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -25,4 +27,17 @@ const UserSchema = new mongoose.Schema({
     
     
 });
+
+UserSchema.pre("save",async function(next){
+    if(this.isModified("RegPassword")){
+        this.RegPassword = await bcrypt.hash(this.RegPassword, 10);
+        console.log(`The current password is ${this.RegPassword}`);
+
+        this.repeatRegPassword = undefined;
+    }
+    next();
+
+})
+
+
 module.exports = mongoose.model("UserReg",UserSchema);
