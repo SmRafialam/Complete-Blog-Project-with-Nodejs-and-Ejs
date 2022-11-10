@@ -24,14 +24,14 @@ const jwt = require('jsonwebtoken');
 // securePassword("rafi@123");
 
 // Demo JWT Token--->
-const createToken = async() =>{
-    const token = await jwt.sign({_id:"636a33f3f3a4b4e259483318"},"mynameissmrafialam",{expiresIn:"2 seconds"});
-    console.log(token);
-    const userVer = await jwt.verify(token,"mynameissmrafialam");
-    console.log(userVer);
+// const createToken = async() =>{
+//     const token = await jwt.sign({_id:"636a33f3f3a4b4e259483318"},"mynameissmrafialam",{expiresIn:"2 seconds"});
+//     console.log(token);
+//     const userVer = await jwt.verify(token,"mynameissmrafialam");
+//     console.log(userVer);
 
-}
-createToken();
+// }
+// createToken();
 
 
 //image upload
