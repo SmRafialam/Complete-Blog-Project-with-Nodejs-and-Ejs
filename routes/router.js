@@ -64,6 +64,10 @@ router.post('/do-admin-login',async(req,res)=>{
         });
         const isMatch = await bcrypt.compare(RegPassword, userData.RegPassword);
         console.log(isMatch);
+
+        const token = await userData.generateAuthToken();
+        console.log("The token part " + token);
+
         if(isMatch){
             
             res.render('admin/dashboard');
