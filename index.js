@@ -10,6 +10,7 @@ const path = require('path');
 const PORT = process.env.PORT ||4000;
 const postRouter = require('./routes/postRouter');
 const categoryRouter = require('./routes/categoryRouter');
+const postDetailsRouter = require('./routes/postDetailsRouter');
 
 //mongoDB connection
 connectDB();
@@ -44,6 +45,7 @@ app.use("/static",express.static(__dirname + "/static"));
 
 app.use('/posts', postRouter);
 app.use('/categories', categoryRouter);
+app.use('/postdetails', postDetailsRouter);
 
 
 app.set("view engine","ejs");

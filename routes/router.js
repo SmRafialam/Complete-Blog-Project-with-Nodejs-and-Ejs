@@ -204,13 +204,13 @@ router.post('/register',upload,async(req,res)=>{
     
 // });
 
-// router.get('/posts',function(req,res){
-//     res.send("All posts");
-// });
+router.get('/posts',function(req,res){
+    res.send("All posts");
+});
 
-// router.get('/categories',function(req,res){
-//     res.send("All Categories");
-// });
+router.get('/categories',function(req,res){
+    res.send("All Categories");
+});
 
 router.get('/',function(req,res){
     // const limitnumber = 3;
@@ -277,31 +277,32 @@ router.get("/register",function(req,res){
 
 //     }
 // });
-//insert an post details into database route
-router.post('/addPostDetails',upload,async(req,res)=>{
-    const postdetailsdata = {
-        title: req.body.title,
-        content: req.body.content,
-        shortDescription: req.body.shortDescription,
-        image: req.file.filename,
-        status: req.body.status,
-    }
-    console.log(postdetailsdata);
-    const postdetails = new PostDetails(postdetailsdata);
-    postdetails.save((err) => {
-        console.log(err);
-        if(err){
-            res.json({message: err.message, type: 'danger'});
 
-        }else{
-            req.message={
-                type: "success",
-                message: "post Details added successfully",
-            };
-            res.redirect('/admin/postDetailsLists');
-        }
-    });
-});
+//insert an post details into database route
+// router.post('/addPostDetails',upload,async(req,res)=>{
+//     const postdetailsdata = {
+//         title: req.body.title,
+//         content: req.body.content,
+//         shortDescription: req.body.shortDescription,
+//         image: req.file.filename,
+//         status: req.body.status,
+//     }
+//     console.log(postdetailsdata);
+//     const postdetails = new PostDetails(postdetailsdata);
+//     postdetails.save((err) => {
+//         console.log(err);
+//         if(err){
+//             res.json({message: err.message, type: 'danger'});
+
+//         }else{
+//             req.message={
+//                 type: "success",
+//                 message: "post Details added successfully",
+//             };
+//             res.redirect('/admin/postDetailsLists');
+//         }
+//     });
+// });
 
 //specific query for featured item property
 const getFeaturedItem = async()=>{
@@ -320,117 +321,119 @@ getFeaturedItem();
 
 
 //add & show post details route
-router.get('/admin/addPostDetails',async(req,res)=>{
-    try{
+// router.get('/admin/addPostDetails',async(req,res)=>{
+//     try{
         
-        res.render("admin/addPostDetails", { title:"Add Post Details"});
-    }
-    catch(err){
-        res.send("Something went wrong");
-    }
-});
-router.get('/admin/postDetailsLists',async(req,res)=>{
-    try{
-        const postdetails = await PostDetails.find({});
-        const postComments = await DoComments.find({
-        });
-        res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, postComments:postComments});
-    }
-    catch(err){
-        res.send("Something went wrong");
+//         res.render("admin/addPostDetails", { title:"Add Post Details"});
+//     }
+//     catch(err){
+//         res.send("Something went wrong");
+//     }
+// });
+// router.get('/admin/postDetailsLists',async(req,res)=>{
+//     try{
+//         const postdetails = await PostDetails.find({});
+//         const postComments = await DoComments.find({
+//         });
+//         res.render("admin/postDetailsLists", { title:"Post Details Lists", postdetails:postdetails, postComments:postComments});
+//     }
+//     catch(err){
+//         res.send("Something went wrong");
 
-    }
-});
-router.get('/postDetails',async(req,res)=>{
-    try{
-        const postDetails = await PostDetails.find({});
-        const postComments = await DoComments.find({
-            status: 'Approved',
-        });
-        res.render("user/blogdetails", { postDetails:postDetails, postComments:postComments});
-    }
-    catch(err){
-        res.send("Something went wrong");
+//     }
+// });
+// router.get('/postDetails',async(req,res)=>{
+//     try{
+//         const postDetails = await PostDetails.find({});
+//         const postComments = await DoComments.find({
+//             status: 'Approved',
+//         });
+//         res.render("user/blogdetails", { postDetails:postDetails, postComments:postComments});
+//     }
+//     catch(err){
+//         res.send("Something went wrong");
 
-    }
+//     }
     
-});
+// });
+
 //edit post details route
-router.get('/update-postDetails/:id',function(req,res){
-    let id = req.params.id;
-    PostDetails.findById(id, (err,postdetails)=>{
-        if(err){
-            res.redirect("/admin/postDetailsLists");
-        }else{
-                res.render("admin/update_postDetails",{
-                    title: "Update post Details",
-                    postdetails:postdetails,
+// router.get('/update-postDetails/:id',function(req,res){
+//     let id = req.params.id;
+//     PostDetails.findById(id, (err,postdetails)=>{
+//         if(err){
+//             res.redirect("/admin/postDetailsLists");
+//         }else{
+//                 res.render("admin/update_postDetails",{
+//                     title: "Update post Details",
+//                     postdetails:postdetails,
 
-                })
-            }
+//                 })
+//             }
         
-    })
-});
+//     })
+// });
 //update an post details route
-router.post('/update_postDetails/:id',upload,function(req,res){
-    let id = req.params.id;
-    let new_image = "";
-    if(req.file){
-        new_image = req.file.filename;
-        try{
-            fs.unlinkSync('./uploads/'+req.body.old_image);
-        }catch(err){
-            console.log(err);
-        }
-    }else{
-        new_image = req.body.old_image;
-    }
+// router.post('/update_postDetails/:id',upload,function(req,res){
+//     let id = req.params.id;
+//     let new_image = "";
+//     if(req.file){
+//         new_image = req.file.filename;
+//         try{
+//             fs.unlinkSync('./uploads/'+req.body.old_image);
+//         }catch(err){
+//             console.log(err);
+//         }
+//     }else{
+//         new_image = req.body.old_image;
+//     }
 
 
-    PostDetails.findByIdAndUpdate(id, {
-        title: req.body.title,
-        content: req.body.content,
-        shortDescription: req.body.shortDescription,
-        image: new_image,
-        status: req.body.status,
-    },
-    (err,result)=>{
-        if(err){
-            res.json({message: err.message, type: 'danger'});
+//     PostDetails.findByIdAndUpdate(id, {
+//         title: req.body.title,
+//         content: req.body.content,
+//         shortDescription: req.body.shortDescription,
+//         image: new_image,
+//         status: req.body.status,
+//     },
+//     (err,result)=>{
+//         if(err){
+//             res.json({message: err.message, type: 'danger'});
 
-        }else{
-            req.message={
-                type: "success",
-                message: "post details added successfully",
-            };
-            res.redirect('/admin/postDetailsLists');
-        }
-    });
-});
+//         }else{
+//             req.message={
+//                 type: "success",
+//                 message: "post details added successfully",
+//             };
+//             res.redirect('/admin/postDetailsLists');
+//         }
+//     });
+// });
+
 //Delete an post details route
-router.get('/delete-postDetails/:id',(req,res)=>{
-    let id = req.params.id;
-    PostDetails.findByIdAndRemove(id,(err,result)=>{
-        if(result.image!=''){
-            try{
-                fs.unlinkSync('./uploads/'+result.image);
-            }catch(err){
-                console.log(err);
-            }
-        }
-        if(err){
-            res.json({message: err.message, type: 'danger'});
+// router.get('/delete-postDetails/:id',(req,res)=>{
+//     let id = req.params.id;
+//     PostDetails.findByIdAndRemove(id,(err,result)=>{
+//         if(result.image!=''){
+//             try{
+//                 fs.unlinkSync('./uploads/'+result.image);
+//             }catch(err){
+//                 console.log(err);
+//             }
+//         }
+//         if(err){
+//             res.json({message: err.message, type: 'danger'});
 
-        }else{
-            req.message={
-                type: "success",
-                message: "post details removed successfully",
-            };
-            res.redirect('/admin/postDetailsLists');
-        }
+//         }else{
+//             req.message={
+//                 type: "success",
+//                 message: "post details removed successfully",
+//             };
+//             res.redirect('/admin/postDetailsLists');
+//         }
 
-    });
-});
+//     });
+// });
 
 //post comment route
 // router.post("/do-comment",function(req,res){

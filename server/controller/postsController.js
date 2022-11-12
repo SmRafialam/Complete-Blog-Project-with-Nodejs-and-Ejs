@@ -125,6 +125,7 @@ try{
 
 }
 };
+
 //edit an post route
 
 const getPostsEdit = async(req,res)=>{
@@ -152,6 +153,19 @@ const getPostsEdit = async(req,res)=>{
   
 };
 
+//specific query for featured item property
+const getFeaturedItem = async()=>{
+    try{
+        const result = await Post.find({featuredItem: true});
+        console.log(result); 
+    }
+    catch(err){
+        console.log(err);
+    }
+    
+}
+getFeaturedItem();
+
 module.exports = {
   addPosts,
   getAddPosts,
@@ -159,5 +173,6 @@ module.exports = {
   getPostLists,
   deletePosts,
   getPostsEdit,
-  updatePosts
+  updatePosts,
+  getFeaturedItem
 }
