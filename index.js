@@ -8,7 +8,8 @@ const fs = require('fs');
 const connectDB = require('./server/database/connection'); 
 const path = require('path');
 const PORT = process.env.PORT ||4000;
-
+const postRouter = require('./routes/postRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
 //mongoDB connection
 connectDB();
@@ -30,21 +31,19 @@ app.use(
         resave: false,
     })
 );
-// app.use((req,res,next)=>{
-//     res.locals.message = res.session.message;
-//     delete req.session.message;
-//     next();
-// });
+
 
 app.use('/node_modules/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 //route prefix
-app.use("",require("./routes/router"));
+// app.use("",require("./routes/router"));
 
 // app.use(express.static("uploads"));
 
 app.use("/static",express.static(__dirname + "/static"));
 
+app.use('/posts', postRouter);
+app.use('/categories', categoryRouter);
 
 
 app.set("view engine","ejs");

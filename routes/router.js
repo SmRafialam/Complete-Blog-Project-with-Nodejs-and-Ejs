@@ -83,28 +83,6 @@ router.post('/do-admin-login',async(req,res)=>{
     }            
 });
 
-// router.post('/do-admin-login',upload,async(req,res)=>{
-//     const doAdminLogin = {
-//         email: req.body.email,
-//         password: req.body.password,
-
-//     }
-//     console.log(doAdminLogin);
-//     const doLogin = new Admins(doAdminLogin);
-//     doLogin.save((err) => {
-//         console.log(err);
-//         if(err){
-//             res.json({message: err.message, type: 'danger'});
-
-//         }else{
-//             req.message={
-//                 type: "success",
-//                 message: "Added successfully",
-//             };
-//             res.redirect('/admin/dashboard');
-//         }
-//     });
-// });
 
 router.get("/do-logout",function(req,res){
     req.session.destroy();
@@ -150,63 +128,7 @@ router.post('/register',upload,async(req,res)=>{
 }
 });
 
-//insert an post into database route
-router.post('/addposts',upload,async(req,res)=>{
-    
 
-    const postdata = {
-        title: req.body.title,
-        content: req.body.content,
-        shortDescription: req.body.shortDescription,
-        image: req.file.filename,
-        featuredItem: req.body.featuredItem,
-        status: req.body.status,
-        categories: req.body.catId,
-
-    }
-    console.log(postdata);
-    const post = new Post(postdata);
-    try{
-        const postlist = await post.save();
-        await Category.updateOne({
-            _id : req.catId
-        },{
-            $push:{
-                posts: postlist._id
-            }
-        });
-        req.message={
-            type: "success",
-            message: "Posts added successfully",
-        };
-        res.redirect('/admin/postlists');
-    }
-    catch(err){
-        console.log(err);
-        res.status(500).json({
-            error: "There was a server side error!",
-        });
-    }
-    
-    // post.save((err) => {
-    //     console.log(err);
-    //     if(err){
-    //         res.json({message: err.message, type: 'danger'});
-
-    //     }else{
-    //         req.message={
-    //             type: "success",
-    //             message: "post added successfully",
-    //         };
-    //         res.redirect('/admin/postlists');
-    //     }
-    // });
-    
-});
-
-router.get('/posts',function(req,res){
-    res.send("All posts");
-});
 
 router.get('/categories',function(req,res){
     res.send("All Categories");
@@ -254,29 +176,7 @@ router.get("/register",function(req,res){
     res.render("admin/register")
 });
 
-router.get('/admin/addposts',async(req,res)=>{
-    try{
-        const categories = await Category.find({});
-        console.log(categories);
-        res.render("admin/addposts", { title:"Add Posts", categories:categories});
-    }
-    catch(err){
-        res.send("Something went wrong");
-    }
-    
-});
-router.get('/admin/postlists',async(req,res)=>{
-    try{
-        const posts = await Post.find({
-            type: "true"
-        }).populate("categories");
-        res.render("admin/postlists", { title:"Post Lists", posts:posts, });
-    }
-    catch(err){
-        res.send("Something went wrong");
 
-    }
-});
 //insert an post details into database route
 router.post('/addPostDetails',upload,async(req,res)=>{
     const postdetailsdata = {
@@ -440,84 +340,6 @@ router.get('/delete-postDetails/:id',(req,res)=>{
 
 
 
-//edit an post route
-router.get('/update-post/:id',function(req,res){
-    let id = req.params.id;
-    Post.findById(id, (err,post)=>{
-        if(err){
-            res.redirect("/admin/postlists");
-        }else{
-                res.render("admin/update_post",{
-                    title: "Update post",
-                    post:post,
-
-                })
-            }
-        
-    })
-});
-//update an post route
-router.post('/update_post/:id',upload,function(req,res){
-    let id = req.params.id;
-    let new_image = "";
-    if(req.file){
-        new_image = req.file.filename;
-        try{
-            fs.unlinkSync('./uploads/'+req.body.old_image);
-        }catch(err){
-            console.log(err);
-        }
-    }else{
-        new_image = req.body.old_image;
-    }
-
-
-    Post.findByIdAndUpdate(id, {
-        title: req.body.title,
-        content: req.body.content,
-        shortDescription: req.body.shortDescription,
-        image: new_image,
-        featuredItem: req.body.featuredItem,
-        status: req.body.status,
-    },
-    (err,result)=>{
-        if(err){
-            res.json({message: err.message, type: 'danger'});
-
-        }else{
-            req.message={
-                type: "success",
-                message: "post added successfully",
-            };
-            res.redirect('/admin/postlists');
-        }
-    });
-});
-
-//Delete an post route
-router.get('/delete-post/:id',(req,res)=>{
-    let id = req.params.id;
-    Post.findByIdAndRemove(id,(err,result)=>{
-        if(result.image!=''){
-            try{
-                fs.unlinkSync('./uploads/'+result.image);
-            }catch(err){
-                console.log(err);
-            }
-        }
-        if(err){
-            res.json({message: err.message, type: 'danger'});
-
-        }else{
-            req.message={
-                type: "success",
-                message: "post removed successfully",
-            };
-            res.redirect('/admin/postlists');
-        }
-
-    })
-})
 
 //POST FOR COMMENT BOX
 //----------->
@@ -689,15 +511,6 @@ router.get('/admin/categorylists',async(req,res)=>{
         res.send("Something went wrong");
 
     }
-
-    // Category.find().populate("posts").exec((err,categories)=>{
-    //     if(err){
-    //         res.send("Something went wrong");
-    //     } else{
-    //         res.render("admin/categorylists", { title:"Add Category Lists", categories:categories, });
-
-    //     }
-    // });
 });
 
 
