@@ -17,12 +17,12 @@ var upload = multer({
     storage:storage,
 }).single("image");
 
-postRouter.post('/addcategory', upload, AddCategory)
-postRouter.get('/admin/addcategory', getAddCategory)
-postRouter.get('/admin/categorylists', getCategoryLists)
-postRouter.get('/delete-category/:id', deleteCategory)
-postRouter.get('/update-category/:id', getCategoryEdit)
-postRouter.post('/update_category/:id',upload, updateCategory)
+categoryRouter.post('/addcategory', upload, AddCategory)
+categoryRouter.get('/admin/addcategory', getAddCategory)
+categoryRouter.get('/admin/categorylists', getCategoryLists)
+categoryRouter.get('/delete-category/:id', deleteCategory)
+categoryRouter.get('/update-category/:id', getCategoryEdit)
+categoryRouter.post('/update_category/:id',upload, updateCategory)
 
 
 
