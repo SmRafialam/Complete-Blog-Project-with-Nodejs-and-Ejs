@@ -106,7 +106,7 @@ function submitForm(e){
   const comment = document.querySelector('#comment').value;
   const captcha = document.querySelector('#g-recaptcha-response').value;
 
-  fetch('/subscribe', {
+  fetch('/comments/subscribe', {
     method: 'POST',
     headers: {
       'Accept' : 'application/json, text/plain, */*',

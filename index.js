@@ -11,6 +11,10 @@ const PORT = process.env.PORT ||4000;
 const postRouter = require('./routes/postRouter');
 const categoryRouter = require('./routes/categoryRouter');
 const postDetailsRouter = require('./routes/postDetailsRouter');
+const homeRouter = require('./routes/homeRouter');
+const commentRouter = require('./routes/commentRouter');
+const adminRouter = require('./routes/adminRouter');
+const userRouter = require('./routes/userRouter');
 
 //mongoDB connection
 connectDB();
@@ -43,9 +47,13 @@ app.use('/node_modules/tinymce', express.static(path.join(__dirname, 'node_modul
 
 app.use("/static",express.static(__dirname + "/static"));
 
+app.use('/', homeRouter);
 app.use('/posts', postRouter);
 app.use('/categories', categoryRouter);
 app.use('/postdetails', postDetailsRouter);
+app.use('/comments', commentRouter);
+app.use('/admins', adminRouter);
+app.use('/registers', userRouter);
 
 
 app.set("view engine","ejs");

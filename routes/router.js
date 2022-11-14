@@ -51,37 +51,37 @@ var upload = multer({
 
 //admin panel---->
 //login-check
-router.post('/do-admin-login',async(req,res)=>{
+// router.post('/do-admin-login',async(req,res)=>{
 
 
-    const email = req.body.email;
-    const RegPassword= req.body.RegPassword;
+//     const email = req.body.email;
+//     const RegPassword= req.body.RegPassword;
 
-    try{
+//     try{
 
-        const userData = await UserReg.findOne({
-            email:email,
-        });
-        const isMatch = await bcrypt.compare(RegPassword, userData.RegPassword);
-        console.log(isMatch);
+//         const userData = await UserReg.findOne({
+//             email:email,
+//         });
+//         const isMatch = await bcrypt.compare(RegPassword, userData.RegPassword);
+//         console.log(isMatch);
 
-        const token = await userData.generateAuthToken();
-        console.log("The token part " + token);
+//         const token = await userData.generateAuthToken();
+//         console.log("The token part " + token);
 
-        if(isMatch){
+//         if(isMatch){
             
-            res.render('admin/dashboard');
+//             res.render('admin/dashboard');
 
 
-        }
-        else{
-            res.render('admin/login',{message: "email and password is incorrect"});
-        }
-    }
-    catch(err){
-        res.send("Invalid login details");
-    }            
-});
+//         }
+//         else{
+//             res.render('admin/login',{message: "email and password is incorrect"});
+//         }
+//     }
+//     catch(err){
+//         res.send("Invalid login details");
+//     }            
+// });
 
 // router.post('/do-admin-login',upload,async(req,res)=>{
 //     const doAdminLogin = {
@@ -106,49 +106,49 @@ router.post('/do-admin-login',async(req,res)=>{
 //     });
 // });
 
-router.get("/do-logout",function(req,res){
-    req.session.destroy();
-    res.redirect("/admin");
-})
+// router.get("/do-logout",function(req,res){
+//     req.session.destroy();
+//     res.redirect("/admin");
+// })
 
 //Registration Panel---->
 
-router.post('/register',upload,async(req,res)=>{
-    const Password = req.body.RegPassword;
-    const RepeatPassword = req.body.repeatRegPassword;
+// router.post('/register',upload,async(req,res)=>{
+//     const Password = req.body.RegPassword;
+//     const RepeatPassword = req.body.repeatRegPassword;
 
-  if(Password === RepeatPassword){
-    const userRegister = {
-        name:req.body.name,
-        email:req.body.email,
-        phone:req.body.phone,
-        RegPassword:req.body.RegPassword,
-        repeatRegPassword:req.body.repeatRegPassword,
-    }
-    const registered = new UserReg(userRegister);
+//   if(Password === RepeatPassword){
+//     const userRegister = {
+//         name:req.body.name,
+//         email:req.body.email,
+//         phone:req.body.phone,
+//         RegPassword:req.body.RegPassword,
+//         repeatRegPassword:req.body.repeatRegPassword,
+//     }
+//     const registered = new UserReg(userRegister);
 
-    const token = await registered.generateAuthToken();
-    console.log("The token part " + token);
+//     const token = await registered.generateAuthToken();
+//     console.log("The token part " + token);
 
-    registered.save((err) => {
-        console.log(err);
-        if(err){
-            res.json({message: err.message, type: 'danger'});
+//     registered.save((err) => {
+//         console.log(err);
+//         if(err){
+//             res.json({message: err.message, type: 'danger'});
 
-        }else{
-            req.message={
-                type: "success",
-                message: "User added successfully",
-            };
-            res.redirect('/admin');
-        }
-    });
-    console.log("The registered part " + registered);
+//         }else{
+//             req.message={
+//                 type: "success",
+//                 message: "User added successfully",
+//             };
+//             res.redirect('/admin');
+//         }
+//     });
+//     console.log("The registered part " + registered);
 
-}else{
-    res.send("password not matching");
-}
-});
+// }else{
+//     res.send("password not matching");
+// }
+// });
 
 //insert an post into database route
 // router.post('/addposts',upload,async(req,res)=>{
@@ -212,33 +212,33 @@ router.get('/categories',function(req,res){
     res.send("All Categories");
 });
 
-router.get('/',function(req,res){
+// router.get('/',function(req,res){
     // const limitnumber = 3;
     //     const latest = Post.find({}).sort({_id: -1}).limit(limitnumber);
     //     const posts = { latest };
-        Post.find({
-            status: 'Active'
-        }).exec((err,posts)=>{
+//         Post.find({
+//             status: 'Active'
+//         }).exec((err,posts)=>{
         
-        posts=posts.reverse();
-        if(err){ 
-            res.send("Something went wrong");
-        } else{
-            Category.find({
-                status: 'Active'
-            }).exec((err,categories)=>{
-                if(err){
-                    res.send("Something went wrong");
-                } else{
-                     res.render("user/home", {posts:posts,categories:categories});
+//         posts=posts.reverse();
+//         if(err){ 
+//             res.send("Something went wrong");
+//         } else{
+//             Category.find({
+//                 status: 'Active'
+//             }).exec((err,categories)=>{
+//                 if(err){
+//                     res.send("Something went wrong");
+//                 } else{
+//                      res.render("user/home", {posts:posts,categories:categories});
         
-                }
-            });
-        }
-    });
+//                 }
+//             });
+//         }
+//     });
 
     
-});
+// });
 
 // router.get('/admin/dashboard',function(req,res){
 
@@ -246,13 +246,13 @@ router.get('/',function(req,res){
     
 // });
 
-router.get("/admin",function(req,res){
-    res.render("admin/login")
-});
+// router.get("/admin",function(req,res){
+//     res.render("admin/login")
+// });
 
-router.get("/register",function(req,res){
-    res.render("admin/register")
-});
+// router.get("/register",function(req,res){
+//     res.render("admin/register")
+// });
 
 // router.get('/admin/addposts',async(req,res)=>{
 //     try{
@@ -305,17 +305,17 @@ router.get("/register",function(req,res){
 // });
 
 //specific query for featured item property
-const getFeaturedItem = async()=>{
-    try{
-        const result = await Post.find({featuredItem: true});
-        console.log(result); 
-    }
-    catch(err){
-        console.log(err);
-    }
+// const getFeaturedItem = async()=>{
+//     try{
+//         const result = await Post.find({featuredItem: true});
+//         console.log(result); 
+//     }
+//     catch(err){
+//         console.log(err);
+//     }
     
-}
-getFeaturedItem();
+// }
+// getFeaturedItem();
 
 
 
@@ -523,33 +523,33 @@ getFeaturedItem();
 
 //POST FOR COMMENT BOX
 //----------->
-router.post('/doComment',upload,async(req,res)=>{
+// router.post('/doComment',upload,async(req,res)=>{
 
     
-    const doCommentdata = {
-        name: req.body.name,
-        email: req.body.email,
-        comment: req.body.comment,
-        status: req.body.status,
+//     const doCommentdata = {
+//         name: req.body.name,
+//         email: req.body.email,
+//         comment: req.body.comment,
+//         status: req.body.status,
 
-    }
-    console.log(doCommentdata);
-    try{
-        const doComments = new DoComments(doCommentdata);
+//     }
+//     console.log(doCommentdata);
+//     try{
+//         const doComments = new DoComments(doCommentdata);
 
-        await doComments.save();
-        req.message={
-            type: "success",
-            message: "post Comments added successfully",
-        };
-        res.redirect('/postdetails');
-    }
-    catch(err){
-        res.json({message: err.message, type: 'danger'});
-    }
+//         await doComments.save();
+//         req.message={
+//             type: "success",
+//             message: "post Comments added successfully",
+//         };
+//         res.redirect('/postdetails');
+//     }
+//     catch(err){
+//         res.json({message: err.message, type: 'danger'});
+//     }
     
     
-});
+// });
 
 
 // router.get('/doComment/:id',async(req,res)=>{
@@ -570,110 +570,111 @@ router.post('/doComment',upload,async(req,res)=>{
 // });
 
 //edit an view comments route
-router.get('/view-comments/:id',function(req,res){
-    let id = req.params.id;
-    DoComments.findById(id, (err,viewComments)=>{
-        if(err){
-            res.redirect("/admin/postDetailsLists");
-        }else{
-                res.render("admin/view_comments",{
-                    title: "View Comments",
-                    viewComments:viewComments,
-                })
-            }
+// router.get('/view-comments/:id',function(req,res){
+//     let id = req.params.id;
+//     DoComments.findById(id, (err,viewComments)=>{
+//         if(err){
+//             res.redirect("/admin/postDetailsLists");
+//         }else{
+//                 res.render("admin/view_comments",{
+//                     title: "View Comments",
+//                     viewComments:viewComments,
+//                 })
+//             }
         
-    })
-});
-//update an view comments route
-router.post('/view_comments/:id',upload,function(req,res){
-    let id = req.params.id;
-    DoComments.findByIdAndUpdate(id,{
-        name: req.body.name,
-        email: req.body.email,
-        comment: req.body.comment,
-        status: req.body.status, 
-        comment_email: req.body.comment_email,
-    },
-    async(err,result,document)=>{
-        let testAccount = await nodemailer.createTestAccount();
-        let transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
-            secure: false,
-            server : "gmail",
-            auth:{
-                "user": testAccount.user,
-                "pass": testAccount.pass,
-            }
-        });
-        let mailOptions = {
-            "from": "My Blog",
-            "to": req.body.comment_email,
-            "subject": "New reply",
-            "text": req.body.name + "User has replied on your comment.http://localhost:8000/view-comments/" + req.params.id,
-        };
-        let info = transporter.sendMail(mailOptions,function(req,info){
-            if(err){
-            res.json({message: err.message, type: 'danger'});
+//     })
+// });
 
-            }else{
-                req.message={
-                    type: "success",
-                    message: "Comments added successfully",
-                };
-                res.redirect('/admin/postDetailsLists');
-            }
-            });
-            console.log("Message sent: %s", info);
+//update an view comments route
+// router.post('/view_comments/:id',upload,function(req,res){
+//     let id = req.params.id;
+//     DoComments.findByIdAndUpdate(id,{
+//         name: req.body.name,
+//         email: req.body.email,
+//         comment: req.body.comment,
+//         status: req.body.status, 
+//         comment_email: req.body.comment_email,
+//     },
+//     async(err,result,document)=>{
+//         let testAccount = await nodemailer.createTestAccount();
+//         let transporter = nodemailer.createTransport({
+//             host: "smtp.ethereal.email",
+//             port: 587,
+//             secure: false,
+//             server : "gmail",
+//             auth:{
+//                 "user": testAccount.user,
+//                 "pass": testAccount.pass,
+//             }
+//         });
+//         let mailOptions = {
+//             "from": "My Blog",
+//             "to": req.body.comment_email,
+//             "subject": "New reply",
+//             "text": req.body.name + "User has replied on your comment.http://localhost:8000/view-comments/" + req.params.id,
+//         };
+//         let info = transporter.sendMail(mailOptions,function(req,info){
+//             if(err){
+//             res.json({message: err.message, type: 'danger'});
+
+//             }else{
+//                 req.message={
+//                     type: "success",
+//                     message: "Comments added successfully",
+//                 };
+//                 res.redirect('/admin/postDetailsLists');
+//             }
+//             });
+//             console.log("Message sent: %s", info);
         
-    });
-});
+//     });
+// });
 
 //post captcha form
-router.post('/subscribe',(req,res)=>{
-    if(
-        req.body.captcha === undefined ||
-        req.body.captcha === '' ||
-        req.body.captcha === null
+// router.post('/subscribe',(req,res)=>{
+//     if(
+//         req.body.captcha === undefined ||
+//         req.body.captcha === '' ||
+//         req.body.captcha === null
 
-    ){
-        return res.json({"success":false,"msg":"please select captcha"});
-    }
+//     ){
+//         return res.json({"success":false,"msg":"please select captcha"});
+//     }
 
     //secret key
-    const secretKey = '6LeODrQiAAAAAJjJmF8tmqQZmRCZhGIvAL60OAP6';
+    // const secretKey = '6LeODrQiAAAAAJjJmF8tmqQZmRCZhGIvAL60OAP6';
 
     //verify URL
-    const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
+    // const verifyUrl = `https://google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${req.body.captcha}&remoteip=${req.connection.remoteAddress}`;
 
     //Make Request To verify URL
-    request(verifyUrl,(err,response,body)=>{
-        body = JSON.parse(body);
-        console.log(body);
+    // request(verifyUrl,(err,response,body)=>{
+    //     body = JSON.parse(body);
+    //     console.log(body);
         
         //if not successful
-        if(body.success !== undefined && !body.success){
-            return res.json({"success":false,"msg":"Failed captcha Verification"});
-        }
+        // if(body.success !== undefined && !body.success){
+        //     return res.json({"success":false,"msg":"Failed captcha Verification"});
+        // }
         //if successful
         
-        if(body.success == true){
-            const doCommentdata = {
-                name: req.body.name,
-                email: req.body.email,
-                comment: req.body.comment,
-                status: req.body.status,
+//         if(body.success == true){
+//             const doCommentdata = {
+//                 name: req.body.name,
+//                 email: req.body.email,
+//                 comment: req.body.comment,
+//                 status: req.body.status,
         
-            }
-        const doComments = new DoComments(doCommentdata);
+//             }
+//         const doComments = new DoComments(doCommentdata);
 
-        doComments.save();
-        return res.json({"success":true,"msg":"captcha passed"});
+//         doComments.save();
+//         return res.json({"success":true,"msg":"captcha passed"});
 
-        }
-    }) 
+//         }
+//     }) 
 
-});
+// });
 
 
 

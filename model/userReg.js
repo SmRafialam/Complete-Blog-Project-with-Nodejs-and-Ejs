@@ -35,27 +35,30 @@ const UserSchema = new mongoose.Schema({
 });
 
 //generating tokens
-UserSchema.methods.generateAuthToken = async function(){
+UserSchema.methods.generateAuthToken = async(req,res)=>{
     try{
-        const token = await jwt.sign({_id: this._id.toString()}, process.env.SECRET_KEY);
+        const token = jwt.sign({ _id: this._id.toString() }, process.env.SECRET_KEY);
         this.tokens = this.tokens.concat({token:token})
         await this.save();
         return token;
     }catch(error){
-        res.send("The error part" + error);
         console.log("The error part" + error);
     }
 }
 
 
 //converting password into bcrypt hash--->
-UserSchema.pre("save",async function(next){
-    if(this.isModified("RegPassword")){
-        this.RegPassword = await bcrypt.hash(this.RegPassword, 10);
-        this.repeatRegPassword = await bcrypt.hash(this.RegPassword, 10);
+UserSchema.pre("save",async(next)=>{
+    try{
+        if(this.isModified("RegPassword")){
+            this.RegPassword = await bcrypt.hash(this.RegPassword, 10);
+            this.repeatRegPassword = await bcrypt.hash(this.RegPassword, 10);
+        }
+        next();
+    }catch(err){
+        console.log("The error part" + err);
     }
-    next();
-
+    
 })
 
 
