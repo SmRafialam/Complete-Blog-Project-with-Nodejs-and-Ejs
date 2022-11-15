@@ -1,5 +1,6 @@
 const UserReg = require('../../model/userReg');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const getAdmin = async(req,res)=>{
   res.render("admin/login")
@@ -15,11 +16,16 @@ const doAdminLogin = async(req,res)=>{
       const userData = await UserReg.findOne({
           email:email,
       });
-      const isMatch =  bcrypt.compare(RegPassword, userData.RegPassword);
+
+      const isMatch = await bcrypt.compare(RegPassword, userData.RegPassword);
       console.log(isMatch);
 
-      const token =  userData.generateAuthToken();
-      console.log("The token part " + token);
+
+      const token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
+      userData.tokens = userData.tokens.concat({token:token})
+
+      // const token =  userData.generateAuthToken();
+      // console.log("The token part " + token);
 
       if(isMatch){      
           res.render('admin/dashboard');
