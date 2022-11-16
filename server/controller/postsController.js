@@ -112,8 +112,8 @@ const updatePosts = async(req,res)=>{
     image: new_image,
     featuredItem: req.body.featuredItem,
     status: req.body.status,
-});
-console.log(updatePosts);
+  });
+  console.log(updatePosts);
 try{
     req.message={
         type: "success",

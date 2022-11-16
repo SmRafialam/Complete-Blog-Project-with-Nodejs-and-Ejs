@@ -1,6 +1,6 @@
-const nodemailer = require('nodemailer');
 const DoComments = require('../../model/doComments');
 const request = require('request');
+const nodemailer = require('nodemailer');
 
 const doComment = async(req,res)=>{
 
@@ -49,36 +49,16 @@ const updateViewComments = async(req,res)=>{
       email: req.body.email,
       comment: req.body.comment,
       status: req.body.status, 
-      comment_email: req.body.comment_email,
   })
   console.log(updateComments);
   try{
-      let testAccount = await nodemailer.createTestAccount();
-      let transporter = nodemailer.createTransport({
-          host: "smtp.ethereal.email",
-          port: 587,
-          secure: false,
-          server : "gmail",
-          auth:{
-              "user": testAccount.user,
-              "pass": testAccount.pass,
-          }
-      });
-      let mailOptions = {
-          "from": "My Blog",
-          "to": req.body.comment_email,
-          "subject": "New reply",
-          "text": req.body.name + "User has replied on your comment.http://localhost:9000/comments/view-comments/" + req.params.id,
-      };
-      let info = transporter.sendMail(mailOptions,function(req,info){
+      
               req.message={
                   type: "success",
                   message: "Comments added successfully",
               };
               res.redirect('/postdetails/admin/postDetailsLists');
-          
-          });
-          console.log("Message sent: %s", info);
+
       
   }catch(err){
     res.json({message: err.message, type: 'danger'});

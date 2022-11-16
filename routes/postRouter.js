@@ -1,6 +1,7 @@
 // external import
 const express = require('express')
 const { getAddPosts, addPosts,getPostLists, deletePosts, getPostsEdit, updatePosts} = require('../server/controller/postsController')
+const postService = require('../services/postService');
 const multer = require('multer');
 
 
